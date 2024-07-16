@@ -18,6 +18,6 @@ namespace SFRemastered
         public bool sprint;
         public bool isGrounded;
         public LayerMask groundLayers;
-        public Transform shootPosition;
+        //public Transform shootPosition;
     }
 }

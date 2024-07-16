@@ -80,7 +80,7 @@ namespace SFRemastered
 
         private bool GroundCheck()
         {
-            return Physics.Raycast(_blackBoard.shootPosition.position, Vector3.down, 0.3f, _blackBoard.groundLayers);
+            return Physics.Raycast(_fsm.transform.position, Vector3.down, 0.3f, _blackBoard.groundLayers);
         }
 
         private void ShootWeb()
