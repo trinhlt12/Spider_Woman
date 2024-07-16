@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a56d5b13cea14b29a9dfcd09fc399b42, type: 3}
+  m_Name: New Web
+  m_EditorClassIdentifier: 
+  maxWebLength: 100
+  webWidth: 0.5
+  webMaterial: {fileID: 2100000, guid: 181a8a340590fd94da9bd31a3a81e0e7, type: 2}
+  shootCooldown: 0.3
+  shootForce: 100
+  minRopeLength: 10
+  maxPullForce: 2
+  pullDuration: 0.5
+  tensionForce: 100
+  centripetalForce: 100
+  swingForce: 100
+  maxSwingSpeed: 50
+  releaseBoost: 30
