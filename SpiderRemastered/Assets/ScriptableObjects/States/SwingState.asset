@@ -25,3 +25,7 @@ MonoBehaviour:
   _swingState: {fileID: 11400000}
   _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}
   _webSettings: {fileID: 11400000, guid: c28875a24962155439110afa7841141a, type: 2}
+  _mulDirForce: 3
+  _velocity: 25
+  _distanceMaxSwing: 0.3
+  _angleRotate: 180
