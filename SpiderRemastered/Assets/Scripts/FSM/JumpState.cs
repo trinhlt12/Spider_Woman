@@ -48,7 +48,7 @@ namespace SFRemastered
                 return StateStatus.Success;
             }
 
-            if(_blackBoard.playerMovement.GetVelocity().y < -10 && elapsedTime > .2f)
+            if(_blackBoard.playerMovement.GetVelocity().y < -7 && elapsedTime > .2f)
             {
                 _fsm.ChangeState(_fallState);
                 return StateStatus.Success;
