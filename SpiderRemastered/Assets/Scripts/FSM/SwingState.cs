@@ -53,7 +53,8 @@ namespace SFRemastered
 
             if (InputManager.instance.swing.Up)
             {
-                _fsm.ChangeState(_idleState);
+               // ReleaseWeb();
+                _fsm.ChangeState(_jumpAfterSwingState);
                 return StateStatus.Success;
             }
 
@@ -99,5 +100,13 @@ namespace SFRemastered
             _webLine.SetPosition(0, _blackBoard.shootPosition.position);
             _webLine.SetPosition(1, _webAttachPoint.position);
         }
+        private void ReleaseWeb()
+        {
+            _blackBoard._webAttached = false;
+            Vector3 releaseVelocity = _blackBoard.rigidbody.velocity + _fsm.transform.up * _webSettings.releaseBoost;
+            _blackBoard.rigidbody.velocity = releaseVelocity;
+           // _blackBoard.rigidbody.isKinematic = true;
+        }
+        
     }
 }

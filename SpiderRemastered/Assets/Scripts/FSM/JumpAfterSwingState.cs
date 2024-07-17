@@ -31,15 +31,21 @@ namespace SFRemastered
             return StateStatus.Running;
         }
 
+        public override void ExitState()
+        {
+            base.ExitState();
+        }
+
         private void ReleaseWeb()
         {
             _blackBoard._webAttached = false;
 
             _blackBoard.rigidbody.isKinematic = false;
-            _blackBoard.rigidbody.useGravity = true;
+            //_blackBoard.rigidbody.useGravity = true;
 
             Vector3 releaseVelocity = _blackBoard.rigidbody.velocity + _fsm.transform.up * _webSettings.releaseBoost;
-            _blackBoard.rigidbody.velocity = releaseVelocity;
+           // _blackBoard.rigidbody.velocity = releaseVelocity;
+            _blackBoard.playerMovement.SetVelocity(releaseVelocity);
             _blackBoard.rigidbody.isKinematic = true;
         }
     }
