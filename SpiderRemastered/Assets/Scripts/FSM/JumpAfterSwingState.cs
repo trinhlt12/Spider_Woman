@@ -1,46 +1,46 @@
-/*using Animancer;
 using EasyCharacterMovement;
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/States/JumpAfterSwingState")]
+    [CreateAssetMenu(menuName = "ScriptableObjects/States/JumpAfterSwing")]
     public class JumpAfterSwingState : StateBase
     {
         [SerializeField] private IdleState _idleState;
-        [SerializeField] private ClipTransition _jumpAfterSwingAnimation;
-        private AnimancerState _animState;
+        [SerializeField] private WebSO _webSettings;
+        [SerializeField] private AnimationClip _jumpAnimation;
 
         public override void EnterState()
         {
             base.EnterState();
-            
-            // Clear out any movements from the previous state
-            _blackBoard.rigidbody.velocity = Vector3.zero;
-            _blackBoard.playerMovement.SetMovementMode(MovementMode.None);
+            ReleaseWeb();
 
-            // Play the Jump After Swing Animation
-            if(_jumpAfterSwingAnimation.Clip != null)
+            // Play animation
+            if (_jumpAnimation != null)
             {
-                _animState = _blackBoard.animancer.Play(_jumpAfterSwingAnimation);
+                _blackBoard.animancer.Play(_jumpAnimation).Events.OnEnd = () =>
+                {
+                    _fsm.ChangeState(_idleState);
+                };
             }
         }
 
         public override StateStatus UpdateState()
         {
-            // Check if the jump after swing animation has reached 90% completion
-            if (_animState != null && _animState.NormalizedTime > 0.9f)
-            {
-                _fsm.ChangeState(_idleState);
-                return StateStatus.Success;
-            }
-
             return StateStatus.Running;
         }
 
-        public override void ExitState()
+        private void ReleaseWeb()
         {
-            base.ExitState();
+            _blackBoard._webAttached = false;
+
+            _blackBoard.rigidbody.isKinematic = false;
+            _blackBoard.rigidbody.useGravity = true;
+
+            Vector3 releaseVelocity = _blackBoard.rigidbody.velocity + _fsm.transform.up * _webSettings.releaseBoost;
+            _blackBoard.rigidbody.velocity = releaseVelocity;
+            _blackBoard.rigidbody.isKinematic = true;
         }
     }
-}*/
+}

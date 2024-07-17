@@ -20,6 +20,7 @@ namespace SFRemastered
         public LayerMask groundLayers;
         public Transform shootPosition;
         public WebAttachPoint webAttachPoint;
-        // Transform targetCam;
+        public bool _webAttached;
+        public float _downForceMagnitude = 5f;
     }
 }

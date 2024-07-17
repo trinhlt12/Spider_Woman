@@ -24,12 +24,4 @@ MonoBehaviour:
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
   _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}
-  _jumpAfterSwingAnimation:
-    _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 7400000, guid: 8bbebf4dfe3db4f4fb30bcb9c9d1bb27, type: 2}
-    _Speed: 1
-    _NormalizedStartTime: NaN
+  jumpBoost: 10
