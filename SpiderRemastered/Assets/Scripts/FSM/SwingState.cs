@@ -15,6 +15,8 @@ namespace SFRemastered
         [SerializeField] private float _velocity;
         [SerializeField] private float _distanceMaxSwing;
         [SerializeField] private float _angleRotate = 180;
+        [SerializeField] private float swingCoolDownTime = 1f;
+        private float lastSwingTime;
         private Transform _webAttachPoint;
         private LineRenderer _webLine;
         private bool isRotating = false;
@@ -22,6 +24,7 @@ namespace SFRemastered
         public override void EnterState()
         {
             base.EnterState();
+            lastSwingTime = Time.time - swingCoolDownTime;
             _webAttachPoint = _blackBoard.webAttachPoint.transform;
             _blackBoard.webAttachPoint.canUpdatePos = false;
 
@@ -51,8 +54,9 @@ namespace SFRemastered
                 Swing();
             }
 
-            if (InputManager.instance.swing.Up)
+            if (InputManager.instance.swing.Up && Time.time - lastSwingTime >= swingCoolDownTime)
             {
+                lastSwingTime = Time.time;
                // ReleaseWeb();
                 _fsm.ChangeState(_jumpAfterSwingState);
                 return StateStatus.Success;

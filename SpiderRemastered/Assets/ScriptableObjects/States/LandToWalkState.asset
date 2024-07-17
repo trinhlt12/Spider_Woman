@@ -13,30 +13,14 @@ MonoBehaviour:
   m_Name: LandToWalkState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
-  _mainAnimation:
-    _FadeDuration: 0.25
+  _mainAnimations:
+  - _FadeDuration: 0.25
     _Events:
-      _NormalizedTimes:
-      - 0.68011636
-      - 0.684492
-      _Callbacks:
-      - m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 11400000}
-            m_TargetAssemblyTypeName: SFRemastered.LandToWalkState, Assembly-CSharp
-            m_MethodName: FinishRoll
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+      _NormalizedTimes: []
+      _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: b916280beb3c80c43af3717898d4340b, type: 3}
-    _Speed: NaN
+    _Speed: 1
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
   _jumpState: {fileID: 11400000, guid: 6235abdc6b6054443b85e92c6db43ed7, type: 2}

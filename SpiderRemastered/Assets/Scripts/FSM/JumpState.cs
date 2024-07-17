@@ -11,6 +11,7 @@ namespace SFRemastered
         [SerializeField] private float jumpImpulseModifier = 1f;
         [SerializeField] private WalkState _walkState;
         [SerializeField] private FallState _fallState;
+        
         [SerializeField] private ClipTransition _fallLoopAnimation;
 
         public override void EnterState()
@@ -47,7 +48,7 @@ namespace SFRemastered
                 return StateStatus.Success;
             }
 
-            if(_blackBoard.playerMovement.GetVelocity().y < 0 && elapsedTime > .2f)
+            if(_blackBoard.playerMovement.GetVelocity().y < -10 && elapsedTime > .2f)
             {
                 _fsm.ChangeState(_fallState);
                 return StateStatus.Success;

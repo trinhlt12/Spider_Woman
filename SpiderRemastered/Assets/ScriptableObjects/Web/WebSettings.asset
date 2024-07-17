@@ -24,4 +24,4 @@ MonoBehaviour:
   centripetalForce: 1
   swingForce: 50
   maxSwingSpeed: 100
-  releaseBoost: 100
+  releaseBoost: 20

@@ -13,14 +13,30 @@ MonoBehaviour:
   m_Name: SwingState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
-  _mainAnimation:
-    _FadeDuration: 0.25
+  _mainAnimations:
+  - _FadeDuration: 0.25
     _Events:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: 1aa0437db4d21ad49a4a2409bb4137ab, type: 2}
-    _Speed: 1.5
+    _Clip: {fileID: 7400000, guid: 7ce33ca7da5802249beb42254dc7b47c, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 43282704390015a4895fe154d430f058, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: 388e16cf7187d3d4ca9ddcb029531b2a, type: 2}
+    _Speed: 1
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000}
   _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}
@@ -30,3 +46,4 @@ MonoBehaviour:
   _velocity: 25
   _distanceMaxSwing: 0.3
   _angleRotate: 180
+  swingCoolDownTime: 1

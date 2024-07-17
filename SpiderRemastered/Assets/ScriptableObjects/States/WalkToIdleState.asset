@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: WalkToIdleState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
-  _mainAnimation:
-    _FadeDuration: 0.25
+  _mainAnimations:
+  - _FadeDuration: 0.25
     _Events:
       _NormalizedTimes: []
       _Callbacks: []

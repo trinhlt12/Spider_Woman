@@ -19,7 +19,7 @@ namespace SFRemastered
         protected bool _isAIControlled;
         public bool canTransitionToSelf = false;
         public float elapsedTime { get; private set; }
-        [SerializeField] protected ClipTransition _mainAnimation;
+        [SerializeField] protected ClipTransition[] _mainAnimations;
         protected AnimancerState _state;
 
         [SerializeField] protected SwingState _swingState;
@@ -37,8 +37,14 @@ namespace SFRemastered
             Debug.Log("Entering State: " + this);
             elapsedTime = 0;
 
-            if(_mainAnimation.Clip != null)
-                _state = _blackBoard.animancer.Play(_mainAnimation);
+            if(_mainAnimations != null && _mainAnimations.Length > 0)
+            {
+                int randomIndex = Random.Range(0, _mainAnimations.Length);
+                ClipTransition randomClipTransition = _mainAnimations[randomIndex];
+
+                if(randomClipTransition.Clip != null)
+                    _state = _blackBoard.animancer.Play(randomClipTransition);
+            }
         }
 
         public virtual void ConsistentUpdateState() 
