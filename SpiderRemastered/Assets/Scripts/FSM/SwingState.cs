@@ -2,6 +2,7 @@ using DG.Tweening;
 using EasyCharacterMovement;
 using System.Collections;
 using System.Collections.Generic;
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -10,6 +11,7 @@ namespace SFRemastered
     public class SwingState : StateBase
     {
         [SerializeField] private IdleState _idleState;
+        //[SerializeField] private JumpAfterSwingState _jumpAfterSwingState;
         [SerializeField] private WebSO _webSettings;
         [SerializeField] private float _mulDirForce;
         [SerializeField] private float _velocity;
@@ -19,7 +21,7 @@ namespace SFRemastered
         private bool _webAttached;
         private LineRenderer _webLine;
         private bool isRotating = false;
-        private float contrastAngle;
+        //private float contrastAngle;
 
         public override void EnterState()
         {
@@ -28,7 +30,7 @@ namespace SFRemastered
             // _webAttachPoint.position = _fsm.transform.position + _fsm.transform.forward * 5f + Vector3.up * 10f;
             _webAttachPoint = _blackBoard.webAttachPoint.transform;
             _blackBoard.webAttachPoint.canUpdatePos = false;
-            isRotating = false;
+            //isRotating = false;
             // ShootWeb();
 
             Vector3 velocity = _blackBoard.playerMovement.GetVelocity();
@@ -57,7 +59,7 @@ namespace SFRemastered
                 Swing();
             }
 
-            if (Input.GetKeyUp(KeyCode.E))
+            if (InputManager.instance.swing.Up)
             {
                 ReleaseWeb();
                 _fsm.ChangeState(_idleState);
@@ -74,8 +76,8 @@ namespace SFRemastered
             _blackBoard.webAttachPoint.canUpdatePos = true;
             _webAttached = false;
             _webLine.positionCount = 0;
-            _blackBoard.rigidbody.useGravity = true;_blackBoard.cameraController._cinemachineTargetYaw = _blackBoard.targetCam.eulerAngles.y;
-            _blackBoard.cameraController._cinemachineTargetPitch = _blackBoard.targetCam.eulerAngles.x;
+            //_blackBoard.rigidbody.useGravity = true;_blackBoard.cameraController._cinemachineTargetYaw = _blackBoard.targetCam.eulerAngles.y;
+            //_blackBoard.cameraController._cinemachineTargetPitch = _blackBoard.targetCam.eulerAngles.x;
 
 
             // if (_webAttachPoint != null)
@@ -107,6 +109,8 @@ namespace SFRemastered
         private void Swing()
         {
             Vector3 webDirection = (_webAttachPoint.position - _fsm.transform.position).normalized;
+            Quaternion targetRotation = Quaternion.LookRotation(webDirection);
+            //_fsm.transform.rotation = Quaternion.Slerp(_fsm.transform.rotation, targetRotation, Time.deltaTime * 0.5f);
             float distanceToAttachPoint = Vector3.Distance(_fsm.transform.position, _webAttachPoint.position);
 
             // if (distanceToAttachPoint > _webSettings.maxWebLength)
@@ -132,7 +136,7 @@ namespace SFRemastered
             dir = Vector3.ProjectOnPlane(dir, webDirection);
             _blackBoard.rigidbody.velocity = dir * _velocity;
             _blackBoard.rigidbody.AddForce(swingForce);
-            if (!isRotating && (_webAttachPoint.position.y - _fsm.transform.position.y)/distanceToAttachPoint <= _distanceMaxSwing)
+            /*if (!isRotating && (_webAttachPoint.position.y - _fsm.transform.position.y)/distanceToAttachPoint <= _distanceMaxSwing)
             {
                 isRotating = true;
                 _blackBoard.cameraController.enabled = false;
@@ -141,14 +145,15 @@ namespace SFRemastered
                     .DORotate(
                         new Vector3(_blackBoard.targetCam.eulerAngles.x, contrastAngle,
                             _blackBoard.targetCam.eulerAngles.z), 1f)
-                    .OnComplete(() =>
-                    {
-                        isRotating = false;
-                        _blackBoard.cameraController._cinemachineTargetYaw = _blackBoard.targetCam.eulerAngles.y;
-                        _blackBoard.cameraController._cinemachineTargetPitch = _blackBoard.targetCam.eulerAngles.x;
-                        _blackBoard.cameraController.enabled = true;
-                    });
-            }
+                    .SetEase(Ease.OutSine);
+                /*.OnComplete(() =>
+                {
+                    isRotating = false;
+                    _blackBoard.cameraController._cinemachineTargetYaw = _blackBoard.targetCam.eulerAngles.y;
+                    _blackBoard.cameraController._cinemachineTargetPitch = _blackBoard.targetCam.eulerAngles.x;
+                    _blackBoard.cameraController.enabled = true;
+                });#1#
+            }*/
             //
             // if (isRotating)
             // {
@@ -157,15 +162,18 @@ namespace SFRemastered
             //     if (Mathf.Abs(_blackBoard.targetCam.eulerAngles.y-contrastAngle)<= 0.01f) 
             //         isRotating = false;
             // }
-            _webLine.SetPosition(0, _fsm.transform.position);
+            
+            //
+            
+            _webLine.SetPosition(0, _blackBoard.shootPosition.position);
             _webLine.SetPosition(1, _webAttachPoint.position);
         }
 
         private void ReleaseWeb()
         {
             _webAttached = false;
-            Vector3 releaseVelocity = _blackBoard.rigidbody.velocity + _fsm.transform.forward * _webSettings.releaseBoost;
-            // _blackBoard.rigidbody.velocity = releaseVelocity;
+            Vector3 releaseVelocity = _blackBoard.rigidbody.velocity + _fsm.transform.up * _webSettings.releaseBoost;
+            _blackBoard.rigidbody.velocity = releaseVelocity;
         }
     }
 }

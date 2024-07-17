@@ -22,9 +22,9 @@ namespace SFRemastered
         public float tensionForce = 50f;
         public float centripetalForce = 50f;
         public float swingForce = 30f;
-        public float maxSwingSpeed = 30f;
+        public float maxSwingSpeed = 100;
 
         [Header("Release Properties")]
-        public float releaseBoost = 50f;
+        public float releaseBoost = 100f;
     }
 }

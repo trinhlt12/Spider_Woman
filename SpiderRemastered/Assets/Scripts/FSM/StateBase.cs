@@ -1,4 +1,5 @@
 using Animancer;
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -47,7 +48,7 @@ namespace SFRemastered
 
         public virtual StateStatus UpdateState()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (InputManager.instance.swing.Down)
             {
                 return HandleSwingInput();
             }

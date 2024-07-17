@@ -20,6 +20,6 @@ namespace SFRemastered
         public LayerMask groundLayers;
         public Transform shootPosition;
         public WebAttachPoint webAttachPoint;
-        public Transform targetCam;
+        // Transform targetCam;
     }
 }
