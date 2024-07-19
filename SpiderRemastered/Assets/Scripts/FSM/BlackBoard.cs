@@ -22,5 +22,16 @@ namespace SFRemastered
         public WebAttachPoint webAttachPoint;
         public bool _webAttached;
         public float _downForceMagnitude = 5f;
+
+        [Header("Wall-Running Mechanic")] 
+        public float wallDetectionRange = 1f;
+        public LayerMask wallLayerMask;
+        public float raycastHeight = 2f;
+        public float wallRunSpeed = 50f;
+        public bool isWallRunning;
+        public Vector3 rayOrigin;
+        public float stickToWallDistance = 2f;
+        public Vector3 wallRunDirection;
+        public Vector3 detectedWallNormal;
     }
 }

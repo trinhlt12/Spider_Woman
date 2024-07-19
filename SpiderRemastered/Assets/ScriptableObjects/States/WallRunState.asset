@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf1123714ab313543ac1c844b92253a7, type: 3}
-  m_Name: LandToIdleState
+  m_Script: {fileID: 11500000, guid: 3ec8b4c58d5543cc92ccbe06d0be9886, type: 3}
+  m_Name: WallRunState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
   _mainAnimations:
@@ -19,12 +19,12 @@ MonoBehaviour:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: c6272b90eb4fa5446b4f925cbd211b1a, type: 3}
+    _Clip: {fileID: 7400000, guid: ff608b42ac4504644baf3da20f9345a0, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
-  _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
-  _jumpState: {fileID: 11400000, guid: 6235abdc6b6054443b85e92c6db43ed7, type: 2}
+  _wallRunState: {fileID: 11400000}
+  wallRunSpeed: 5
+  _walkState: {fileID: 11400000, guid: c1719bdf0f93a27409699b28091264e4, type: 2}
+  _jumpState: {fileID: 11400000, guid: c1da1219f551cef4e9a6a3a4ec2b178e, type: 2}
   _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}
-  canJump: 1
-  _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}

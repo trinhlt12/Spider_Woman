@@ -1,6 +1,7 @@
 using Animancer;
 using SFRemastered.InputSystem;
 using UnityEngine;
+using Vector3 = System.Numerics.Vector3;
 
 namespace SFRemastered
 {
@@ -21,14 +22,16 @@ namespace SFRemastered
         public float elapsedTime { get; private set; }
         [SerializeField] protected ClipTransition[] _mainAnimations;
         protected AnimancerState _state;
-
+        protected WallDetection _wallDetection;
         [SerializeField] protected SwingState _swingState;
+        [SerializeField] protected WallRunState _wallRunState;
 
         public virtual void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
             _fsm = fsm;
             _blackBoard = blackBoard;
             _isAIControlled = isAIControlled;
+            _wallDetection = _fsm.GetComponent<WallDetection>();
             elapsedTime = 0;
         }
 
@@ -58,9 +61,17 @@ namespace SFRemastered
             {
                 return HandleSwingInput();
             }
+
+            if (_wallDetection != null && _wallDetection.IsWallDetected())
+            {
+                _fsm.ChangeState(_wallRunState);
+            }else if (_wallDetection == null)
+            {
+                Debug.LogError("wall detection is null");
+            }
+            
             return StateStatus.Running;
         }
-
         public virtual void FixedUpdateState() { }
         public virtual void ExitState() { }
 
@@ -73,7 +84,6 @@ namespace SFRemastered
             }
             return StateStatus.Running;
         }
-
         protected void print(string msg)
         {
             Debug.Log(msg);
