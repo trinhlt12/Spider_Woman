@@ -17,13 +17,11 @@ namespace SFRemastered
             {
                 detectedWallNormal = hit.normal;
                 Debug.DrawRay(_blackBoard.rayOrigin, rayDirection * _blackBoard.wallDetectionRange, Color.green);
-                Debug.Log("Wall detected at: " + hit.point);
                 return true;
             }
 
             detectedWallNormal = Vector3.zero;
             Debug.DrawRay(_blackBoard.rayOrigin, rayDirection * _blackBoard.wallDetectionRange, Color.red);
-            Debug.Log("No wall detected");
             return false;
         }
 

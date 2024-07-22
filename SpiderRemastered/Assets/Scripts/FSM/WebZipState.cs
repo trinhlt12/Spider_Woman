@@ -16,5 +16,9 @@ namespace SFRemastered
         //Finally, the system compares the distance from the edge points is found
         //to the characters line of sight, to see which is nearest and then draws the hood
         //widget on this point.
+        
+        //cast a raycast -> if it hit an object -> detect the shape of that object 
+        //to identify its sides -> draw a sphere gizmo on hit -> rotate the camera to check
+        //whether that gizmo move along the side of object or not
     }
 }

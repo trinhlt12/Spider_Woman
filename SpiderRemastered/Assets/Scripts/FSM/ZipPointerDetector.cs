@@ -7,87 +7,86 @@ namespace SFRemastered
     {
         public BlackBoard BlackBoard;
 
+        private Vector3 zipPoint = Vector3.zero;
+        private bool zipPointDetected = false;
+
         private void Update()
         {
             DetectZipPoint();
+            UpdateCrosshairPosition();
             DrawDebugLines();
         }
 
         private void DetectZipPoint()
         {
-            Debug.Log("Detect Zip point method called");
-            RaycastHit initialHit;
-            if (Physics.Raycast(BlackBoard.playerCamera.position, BlackBoard.playerCamera.forward, out initialHit,
+            if (Physics.Raycast(BlackBoard.playerCamera.position, BlackBoard.playerCamera.forward, out RaycastHit initialHit,
                     BlackBoard.maxZipDistance, BlackBoard.zipPointLayer))
             {
                 Vector3 hitPoint = initialHit.point;
                 Vector3 hitNormal = initialHit.normal;
 
-                // Perform secondary line traces
-                RaycastHit aboveHit, forwardHit;
-                bool aboveHitValid = Physics.Raycast(hitPoint + Vector3.up * 1f, Vector3.down, out aboveHit, 2f,
-                    BlackBoard.zipPointLayer);
-                bool forwardHitValid = Physics.Raycast(hitPoint + hitNormal * 0.1f, hitNormal, out forwardHit, 2f,
-                    BlackBoard.zipPointLayer);
-                if (aboveHitValid && forwardHitValid)
+                // Perform secondary line traces to detect edges
+                Vector3[] directions = {
+                    Vector3.up,
+                    Vector3.down,
+                    Vector3.left,
+                    Vector3.right,
+                    Vector3.forward,
+                    Vector3.back
+                };
+
+                foreach (Vector3 direction in directions)
                 {
-                    Vector3 aboveNormal = aboveHit.normal;
-                    Vector3 forwardNormal = forwardHit.normal;
-
-                    if (Vector3.Angle(hitNormal, aboveNormal) > 45f || Vector3.Angle(hitNormal, forwardNormal) > 45f)
+                    if (Physics.Raycast(hitPoint + direction * 0.1f, -direction, out RaycastHit edgeHit, 0.2f, BlackBoard.zipPointLayer))
                     {
-                        Vector3 zipPoint = forwardHit.point;
-
-                        if (CanPlayerFit(zipPoint) && IsPointVisible(zipPoint) && IsClosestPoint(zipPoint))
+                        if (Vector3.Angle(hitNormal, edgeHit.normal) > 45f) // Arbitrary angle threshold for edge detection
                         {
-                            ShowZipHUD(zipPoint);
-                            Debug.Log("Show hud ui");
+                            zipPoint = edgeHit.point;
+                            zipPointDetected = true;
+                            Debug.Log("Edge detected at: " + zipPoint);
+
+                            // Project the player's collision capsule to ensure it fits on the ledge
+                            if (CanPlayerFit(zipPoint))
+                            {
+                                Debug.Log("Player can fit on the ledge.");
+                            }
+                            else
+                            {
+                                zipPointDetected = false;
+                                Debug.Log("Player cannot fit on the ledge.");
+                            }
+                            break;
                         }
                     }
+                }
+
+                if (!zipPointDetected)
+                {
+                    Debug.Log("No edge detected.");
                 }
             }
             else
             {
-                HideZipHUD();
+                zipPointDetected = false;
+                Debug.Log("Initial hit not detected.");
             }
         }
 
-        private void ShowZipHUD(Vector3 zipPoint)
+        private void UpdateCrosshairPosition()
         {
-            Vector3 screenPoint = BlackBoard.playerCamera.GetComponent<Camera>().WorldToScreenPoint(zipPoint);
-            Debug.Log("Screen point for zip point: " + screenPoint);
-            BlackBoard.hudWidget.position = screenPoint;  // Update the position of the HUD widget
-            BlackBoard.hudWidget.gameObject.SetActive(true);  // Make sure the HUD widget is active
-            Debug.Log("HUD widget position set to: " + BlackBoard.hudWidget.position);
-        }
-
-        private void HideZipHUD()
-        {
-            BlackBoard.hudWidget.gameObject.SetActive(false);
-        }
-
-        private bool IsClosestPoint(Vector3 zipPoint)
-        {
-            float distanceToPlayer = Vector3.Distance(BlackBoard.playerCamera.position, zipPoint);
-            RaycastHit[] hits = Physics.SphereCastAll(BlackBoard.playerCamera.position, 1f,
-                BlackBoard.playerCamera.forward, BlackBoard.maxZipDistance, BlackBoard.zipPointLayer);
-
-            foreach (RaycastHit hit in hits)
+            if (zipPointDetected)
             {
-                if (Vector3.Distance(BlackBoard.playerCamera.position, hit.point) < distanceToPlayer)
-                {
-                    return false;
-                }
+                Camera cam = BlackBoard.playerCamera.GetComponent<Camera>();
+                Vector3 screenPoint = cam.WorldToScreenPoint(zipPoint);
+
+                RectTransform crosshairRect = BlackBoard.crosshair.GetComponent<RectTransform>();
+                crosshairRect.position = screenPoint;
+                BlackBoard.crosshair.gameObject.SetActive(true);
             }
-
-            return true;
-        }
-
-        private bool IsPointVisible(Vector3 zipPoint)
-        {
-            Vector3 screenPoint = BlackBoard.playerCamera.GetComponent<Camera>().WorldToScreenPoint(zipPoint);
-            return screenPoint.z > 0 && screenPoint.x > 0 && screenPoint.x < Screen.width && screenPoint.y > 0 &&
-                   screenPoint.y < Screen.height;
+            else
+            {
+                BlackBoard.crosshair.gameObject.SetActive(false);
+            }
         }
 
         private bool CanPlayerFit(Vector3 zipPoint)
@@ -95,8 +94,7 @@ namespace SFRemastered
             Vector3 capsuleBottom = zipPoint + Vector3.up * BlackBoard.playerCollider.height / 2f;
             Vector3 capsuleTop = zipPoint + Vector3.up * BlackBoard.playerCollider.height;
 
-            return !Physics.CheckCapsule(capsuleBottom, capsuleTop, BlackBoard.playerCollider.radius,
-                BlackBoard.zipPointLayer);
+            return !Physics.CheckCapsule(capsuleBottom, capsuleTop, BlackBoard.playerCollider.radius, BlackBoard.zipPointLayer);
         }
 
         private void DrawDebugLines()
@@ -105,28 +103,24 @@ namespace SFRemastered
                 return;
 
             Debug.DrawRay(BlackBoard.playerCamera.position, BlackBoard.playerCamera.forward * BlackBoard.maxZipDistance, Color.red);
+        }
 
-            RaycastHit initialHit;
-            if (Physics.Raycast(BlackBoard.playerCamera.position, BlackBoard.playerCamera.forward, out initialHit, BlackBoard.maxZipDistance, BlackBoard.zipPointLayer))
+        private void OnDrawGizmos()
+        {
+            if (zipPointDetected)
             {
-                Vector3 hitPoint = initialHit.point;
-                Vector3 hitNormal = initialHit.normal;
+                Gizmos.color = Color.red;
+                float sphereRadius = 0.5f; // Adjust this value to make the sphere bigger
+                Gizmos.DrawSphere(zipPoint, sphereRadius);
 
-                Debug.DrawRay(hitPoint, Vector3.up * 1f, Color.green);
+                // Draw the player's collision capsule for fitting check
+                Vector3 capsuleBottom = zipPoint + Vector3.up * BlackBoard.playerCollider.height / 2f;
+                Vector3 capsuleTop = zipPoint + Vector3.up * BlackBoard.playerCollider.height;
 
-                RaycastHit aboveHit;
-                if (Physics.Raycast(hitPoint + Vector3.up * 1f, Vector3.down, out aboveHit, 2f, BlackBoard.zipPointLayer))
-                {
-                    Debug.DrawRay(aboveHit.point, aboveHit.normal * 1f, Color.blue);
-                }
-
-                Debug.DrawRay(hitPoint + hitNormal * 0.1f, hitNormal * 2f, Color.yellow);
-
-                RaycastHit forwardHit;
-                if (Physics.Raycast(hitPoint + hitNormal * 0.1f, hitNormal, out forwardHit, 2f, BlackBoard.zipPointLayer))
-                {
-                    Debug.DrawRay(forwardHit.point, forwardHit.normal * 1f, Color.cyan);
-                }
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(capsuleBottom, BlackBoard.playerCollider.radius);
+                Gizmos.DrawWireSphere(capsuleTop, BlackBoard.playerCollider.radius);
+                Gizmos.DrawLine(capsuleBottom, capsuleTop);
             }
         }
     }

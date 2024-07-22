@@ -36,11 +36,21 @@ namespace SFRemastered
 
         [Header("Zipping Mechanic")] 
         public float maxZipDistance = 50f;
-
         public LayerMask zipPointLayer;
         public Transform playerCamera;
         public CapsuleCollider playerCollider;
-        public RectTransform hudWidget;
-
+        public RaycastHit initialHit;
+        public RaycastHit aboveHit;
+        public RaycastHit forwardHit;
+        public Vector3 hitPoint;
+        public Vector3 hitNormal;
+        public float maxRaycastDistance = 2f;
+        public Vector3 aboveNormal;
+        public Vector3 forwardNormal;
+        public float detectAngle = 45f;
+        public Vector3 screenPoint;
+        public Vector3 capsuleBottom;
+        public Vector3 capsuleTop;
+        public GameObject crosshair;
     }
 }
