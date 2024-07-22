@@ -33,5 +33,14 @@ namespace SFRemastered
         public float stickToWallDistance = 2f;
         public Vector3 wallRunDirection;
         public Vector3 detectedWallNormal;
+
+        [Header("Zipping Mechanic")] 
+        public float maxZipDistance = 50f;
+
+        public LayerMask zipPointLayer;
+        public Transform playerCamera;
+        public CapsuleCollider playerCollider;
+        public RectTransform hudWidget;
+
     }
 }
