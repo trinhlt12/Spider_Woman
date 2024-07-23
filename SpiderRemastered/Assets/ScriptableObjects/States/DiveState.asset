@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea8f74f43147a64ea8fcba9aca20b88, type: 3}
-  m_Name: FallState
+  m_Script: {fileID: 11500000, guid: 653c07b22fa7487dab513ebe3e931d72, type: 3}
+  m_Name: DiveState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
   _mainAnimations:
@@ -19,7 +19,7 @@ MonoBehaviour:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: da7f98c90faf7814ead19b3b4779426b, type: 2}
+    _Clip: {fileID: 7400000, guid: a51ae72e8bd517c46812efb0cdcaa529, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
@@ -30,4 +30,4 @@ MonoBehaviour:
   _landIdleState: {fileID: 11400000, guid: 15f0ffbabd49eb045b0daa37055c8535, type: 2}
   _landWalkState: {fileID: 11400000, guid: cd95457b9d0feb5488926ca05111571a, type: 2}
   _landSprintState: {fileID: 11400000, guid: 6234c07826aedcf4bb15488a2c51f9c0, type: 2}
-  _diveState: {fileID: 11400000, guid: df3f022d9c3d574488eb19d3e56b928a, type: 2}
+  _diveState: {fileID: 11400000}

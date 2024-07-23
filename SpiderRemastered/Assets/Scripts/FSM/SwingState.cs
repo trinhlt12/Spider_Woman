@@ -14,12 +14,10 @@ namespace SFRemastered
         [SerializeField] private float _mulDirForce;
         [SerializeField] private float _velocity;
         [SerializeField] private float _distanceMaxSwing;
-        [SerializeField] private float _angleRotate = 180;
         [SerializeField] private float swingCoolDownTime = 1f;
         private float lastSwingTime;
         private Transform _webAttachPoint;
         private LineRenderer _webLine;
-        private bool isRotating = false;
 
         public override void EnterState()
         {

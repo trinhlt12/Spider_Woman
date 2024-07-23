@@ -13,6 +13,7 @@ namespace SFRemastered
         [SerializeField] private LandToIdleState _landIdleState;
         [SerializeField] private LandToWalkState _landWalkState;
         [SerializeField] private LandToSprintState _landSprintState;
+        [SerializeField] private DiveState _diveState;
         public override void EnterState()
         {
             base.EnterState();
@@ -42,16 +43,14 @@ namespace SFRemastered
                     _fsm.ChangeState(_walkState);
                 else
                     _fsm.ChangeState(_sprintState);
-
                 return StateStatus.Success;
             }
-
-            //Swing entry point, work in progress
-            //if(_blackBoard.jump)
-            //{
-            //    _fsm.ChangeState(_swingState);
-            //    return StateStatus.Success;
-            //}
+            
+            if(!_blackBoard.playerMovement.IsGrounded() && _blackBoard.playerMovement.GetVelocity().y < -10f)
+            {
+                _fsm.ChangeState(_diveState);
+                return StateStatus.Success;
+            }
 
             return StateStatus.Running;
         }

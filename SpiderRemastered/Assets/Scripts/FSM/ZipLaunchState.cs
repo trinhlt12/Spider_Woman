@@ -39,7 +39,7 @@ namespace SFRemastered
 
             // Use DOTween to animate the player's position along the path
             _launchTweener = _blackBoard.transform.DOPath(path, 3f, PathType.CatmullRom)
-                .SetEase(Ease.Linear).OnComplete(OnLaunchComplete);
+                .SetEase(Ease.OutQuad).OnComplete(OnLaunchComplete);
         }
 
         private void OnLaunchComplete()

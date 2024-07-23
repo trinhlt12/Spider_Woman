@@ -31,13 +31,7 @@ namespace SFRemastered
             ((LinearMixerState)_state).Parameter = Mathf.Lerp(((LinearMixerState)_state).Parameter, _blackBoard.playerMovement.GetSpeed(), 55 * Time.deltaTime);
 
             _blackBoard.playerMovement.SetMovementDirection(_blackBoard.moveDirection);
-
-            //if (_blackBoard.moveDirection.magnitude == 0f)
-            //{
-            //    _fsm.ChangeState(_idleState);
-            //    return StateStatus.Success;
-            //}
-
+            
             if(_blackBoard.sprint)
             {
                 _fsm.ChangeState(_sprintState);

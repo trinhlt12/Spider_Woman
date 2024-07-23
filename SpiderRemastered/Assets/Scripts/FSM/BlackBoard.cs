@@ -47,5 +47,7 @@ namespace SFRemastered
         public bool zipPointDetected;
         public Vector3 zipPoint;
         public float launchBoost = 100f;
+        
+        public float diveBoost = 5f;
     }
 }
