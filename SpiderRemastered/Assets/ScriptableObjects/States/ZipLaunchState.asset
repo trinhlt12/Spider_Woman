@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0a724c27b664fa88dab305b1302739b, type: 3}
-  m_Name: WebZipState
+  m_Script: {fileID: 11500000, guid: 6881af20fac84bb98aecd9afcbb22316, type: 3}
+  m_Name: ZipLaunchState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
   _mainAnimations:
@@ -19,11 +19,10 @@ MonoBehaviour:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: 1822afe7eb36fc7429bf9acabdcff17f, type: 2}
+    _Clip: {fileID: 7400000, guid: 81bcba4c312669e468e8cdbbbfe803f8, type: 2}
     _Speed: 1
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
   _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
-  _webZipState: {fileID: 11400000}
-  _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}
-  _zipIdleState: {fileID: 11400000, guid: aa72a3b15bb2b914fa12dac44a21e8c9, type: 2}
+  _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
+  _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}

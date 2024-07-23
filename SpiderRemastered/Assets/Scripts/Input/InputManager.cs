@@ -28,6 +28,7 @@ namespace SFRemastered.InputSystem
         public InputAction sprint;
         public InputAction swing;
         public InputAction zip;
+        public InputAction launch;
 
         public bool disableInput;
 
@@ -120,6 +121,7 @@ namespace SFRemastered.InputSystem
                 sprint.Cancel();
                 swing.Cancel();
                 zip.Cancel();
+                launch.Cancel();
                 return;
             }
 

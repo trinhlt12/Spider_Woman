@@ -23,7 +23,7 @@ namespace SFRemastered
                 return StateStatus.Success;
             }
 
-            if (!_blackBoard.playerMovement.IsGrounded())
+            if (!_blackBoard.playerMovement.IsGrounded() && _blackBoard.playerMovement.GetVelocity().y < -5)
             {
                 _fsm.ChangeState(_fallState);
                 return StateStatus.Success;

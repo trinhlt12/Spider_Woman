@@ -7,7 +7,7 @@ namespace SFRemastered
     [CreateAssetMenu(menuName = "ScriptableObjects/States/JumpAfterSwing")]
     public class JumpAfterSwingState : StateBase
     {
-        [SerializeField] private IdleState _idleState;
+        //[SerializeField] private IdleState _idleState;
         [SerializeField] private FallState _fallState;
         [SerializeField] private WebSO _webSettings;
         //[SerializeField] private AnimationClip _jumpAnimation;
@@ -18,14 +18,6 @@ namespace SFRemastered
             ReleaseWeb();
             Vector3 directionToFace = Camera.main.transform.position - _blackBoard.transform.position;
             directionToFace.y = 0;
-            /*// Play animation
-            if (_jumpAnimation != null)
-            {
-                _blackBoard.animancer.Play(_jumpAnimation).Events.OnEnd = () =>
-                {
-                    _fsm.ChangeState(_idleState);
-                };
-            }*/
         }
 
         public override StateStatus UpdateState()

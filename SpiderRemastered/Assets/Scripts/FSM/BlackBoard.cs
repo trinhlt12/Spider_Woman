@@ -46,5 +46,6 @@ namespace SFRemastered
         public float zipSpeed = 10f;
         public bool zipPointDetected;
         public Vector3 zipPoint;
+        public float launchBoost = 100f;
     }
 }

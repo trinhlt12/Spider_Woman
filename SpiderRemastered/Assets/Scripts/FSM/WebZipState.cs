@@ -8,13 +8,13 @@ namespace SFRemastered
     public class WebZipState : StateBase
     {
         [SerializeField] private IdleState _idleState;
+        [SerializeField] private ZipIdleState _zipIdleState;
         private Tweener _zipTweener;
         //private Quaternion _intialRotation;
 
         public override void EnterState()
         {
             base.EnterState();
-            // Turn off Easy Character Movement if necessary
             _blackBoard.playerMovement.SetMovementMode(MovementMode.None);
             _blackBoard.rigidbody.isKinematic = false;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
@@ -60,7 +60,7 @@ namespace SFRemastered
         private void OnZipComplete()
         {
             _blackBoard.isZipping = false;
-            _fsm.ChangeState(_idleState);
+            _fsm.ChangeState(_zipIdleState);
         }
 
         public override void ExitState()
