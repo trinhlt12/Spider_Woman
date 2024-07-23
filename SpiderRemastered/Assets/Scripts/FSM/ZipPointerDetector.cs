@@ -8,7 +8,6 @@ namespace SFRemastered
         public BlackBoard BlackBoard;
 
         private Vector3 zipPoint = Vector3.zero;
-        private bool zipPointDetected = false;
 
         private void Update()
         {
@@ -25,7 +24,6 @@ namespace SFRemastered
                 Vector3 hitPoint = initialHit.point;
                 Vector3 hitNormal = initialHit.normal;
 
-                // Perform secondary line traces to detect edges
                 Vector3[] directions = {
                     Vector3.up,
                     Vector3.down,
@@ -39,42 +37,25 @@ namespace SFRemastered
                 {
                     if (Physics.Raycast(hitPoint + direction * 0.1f, -direction, out RaycastHit edgeHit, 0.2f, BlackBoard.zipPointLayer))
                     {
-                        if (Vector3.Angle(hitNormal, edgeHit.normal) > 45f) // Arbitrary angle threshold for edge detection
+                        if (Vector3.Angle(hitNormal, edgeHit.normal) > 45f)
                         {
                             zipPoint = edgeHit.point;
-                            zipPointDetected = true;
-                            Debug.Log("Edge detected at: " + zipPoint);
-
-                            // Project the player's collision capsule to ensure it fits on the ledge
-                            if (CanPlayerFit(zipPoint))
-                            {
-                                Debug.Log("Player can fit on the ledge.");
-                            }
-                            else
-                            {
-                                zipPointDetected = false;
-                                Debug.Log("Player cannot fit on the ledge.");
-                            }
+                            BlackBoard.zipPoint = zipPoint;
+                            BlackBoard.zipPointDetected = true;
                             break;
                         }
                     }
                 }
-
-                if (!zipPointDetected)
-                {
-                    Debug.Log("No edge detected.");
-                }
             }
             else
             {
-                zipPointDetected = false;
-                Debug.Log("Initial hit not detected.");
+                BlackBoard.zipPointDetected = false;
             }
         }
 
         private void UpdateCrosshairPosition()
         {
-            if (zipPointDetected)
+            if (BlackBoard.zipPointDetected)
             {
                 Camera cam = BlackBoard.playerCamera.GetComponent<Camera>();
                 Vector3 screenPoint = cam.WorldToScreenPoint(zipPoint);
@@ -107,13 +88,12 @@ namespace SFRemastered
 
         private void OnDrawGizmos()
         {
-            if (zipPointDetected)
+            if (BlackBoard.zipPointDetected)
             {
                 Gizmos.color = Color.red;
-                float sphereRadius = 0.5f; // Adjust this value to make the sphere bigger
+                float sphereRadius = 0.5f;
                 Gizmos.DrawSphere(zipPoint, sphereRadius);
 
-                // Draw the player's collision capsule for fitting check
                 Vector3 capsuleBottom = zipPoint + Vector3.up * BlackBoard.playerCollider.height / 2f;
                 Vector3 capsuleTop = zipPoint + Vector3.up * BlackBoard.playerCollider.height;
 

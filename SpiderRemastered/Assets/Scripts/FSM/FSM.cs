@@ -49,6 +49,11 @@ namespace SFRemastered
                 return false;
             }
 
+            if (_currentState is WebZipState && _blackBoard.isZipping)
+            {
+                return false;
+            }
+
             if (_currentState == newState && !newState.canTransitionToSelf)
             {
                 return false;

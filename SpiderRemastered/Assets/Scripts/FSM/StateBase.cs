@@ -23,8 +23,10 @@ namespace SFRemastered
         [SerializeField] protected ClipTransition[] _mainAnimations;
         protected AnimancerState _state;
         protected WallDetection _wallDetection;
+        protected ZipPointerDetector _zipPointerDetector;
         [SerializeField] protected SwingState _swingState;
         [SerializeField] protected WallRunState _wallRunState;
+        [SerializeField] protected WebZipState _webZipState;
 
         public virtual void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
@@ -61,6 +63,11 @@ namespace SFRemastered
             {
                 return HandleSwingInput();
             }
+            
+            if (InputManager.instance.zip.Down)
+            {
+                return HandleZipInput();
+            }
 
             if (_wallDetection != null && _wallDetection.IsWallDetected())
             {
@@ -72,6 +79,17 @@ namespace SFRemastered
             
             return StateStatus.Running;
         }
+
+        protected virtual StateStatus HandleZipInput()
+        {
+            if (_webZipState != null && _blackBoard.zipPointDetected)
+            {
+                _fsm.ChangeState(_webZipState);
+                return StateStatus.Success;
+            }
+            return StateStatus.Running;
+        }
+
         public virtual void FixedUpdateState() { }
         public virtual void ExitState() { }
 
