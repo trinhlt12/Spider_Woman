@@ -34,6 +34,7 @@ namespace SFRemastered
             _blackBoard.rigidbody.isKinematic = true;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
             _blackBoard.playerMovement.SetVelocity(velocity);
+            
             _blackBoard.isInWallState = false;
         }
 
@@ -55,6 +56,7 @@ namespace SFRemastered
                 return StateStatus.Success;
             }
 
+            // Check this condition
             if (_blackBoard.moveDirection.magnitude > 0f && _blackBoard.isInWallState && _wallDetection.IsWallDetected())
             {
                 Debug.Log(_blackBoard.moveDirection.magnitude);

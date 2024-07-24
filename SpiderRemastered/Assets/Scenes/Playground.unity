@@ -1396,7 +1396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -264.6, y: 378.1}
+  m_AnchoredPosition: {x: -264.60156, y: 378.1}
   m_SizeDelta: {x: 198.00732, y: 198.0073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &740168511
@@ -1660,6 +1660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _blackBoard: {fileID: 821177550}
+  debugMode: 1
 --- !u!1001 &886928026
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3130,7 +3131,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -565.6, y: 378.1}
+  m_AnchoredPosition: {x: -565.60156, y: 378.1}
   m_SizeDelta: {x: 198.00732, y: 198.0073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1531711455
@@ -4617,7 +4618,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -99.00366, y: 153}
+  m_AnchoredPosition: {x: -99, y: 153}
   m_SizeDelta: {x: 198.00732, y: 198.0073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2076343197
@@ -5002,6 +5003,10 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 1408434822}
+    - target: {fileID: 8772811149629240781, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
+      propertyPath: wallRunSpeed
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8772811149629240781, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: raycastHeight
       value: 1

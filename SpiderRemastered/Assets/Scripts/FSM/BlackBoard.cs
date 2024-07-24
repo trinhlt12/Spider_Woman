@@ -27,7 +27,7 @@ namespace SFRemastered
         public float wallDetectionRange = 1f;
         public LayerMask wallLayerMask;
         public float raycastHeight = 2f;
-        public float wallRunSpeed = 50f;
+        public float wallRunSpeed = 20f;
         public bool isWallRunning;
         public Vector3 rayOrigin;
         public float stickToWallDistance = 2f;
@@ -39,9 +39,7 @@ namespace SFRemastered
         public LayerMask zipPointLayer;
         public Transform playerCamera;
         public CapsuleCollider playerCollider;
-        public float maxRaycastDistance = 2f;
         public GameObject crosshair;
-        public Vector3 targetZipPoint;
         public bool isZipping;
         public float zipSpeed = 10f;
         public bool zipPointDetected;

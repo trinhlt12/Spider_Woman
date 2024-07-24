@@ -39,7 +39,7 @@ namespace SFRemastered
 
         public virtual void EnterState() 
         {
-            Debug.Log("Entering State: " + this);
+             Debug.Log("Entering State: " + this);
             elapsedTime = 0;
 
             if(_mainAnimations != null && _mainAnimations.Length > 0)
@@ -69,12 +69,9 @@ namespace SFRemastered
                 return HandleZipInput();
             }
 
-            if (_wallDetection != null && _wallDetection.IsWallDetected())
+            if (_wallDetection != null && _wallDetection.IsWallDetected() && _blackBoard.moveDirection.magnitude < .1f)
             {
                 _fsm.ChangeState(_wallRunIdleState);
-            }else if (_wallDetection == null)
-            {
-                Debug.LogError("wall detection is null");
             }
             
             return StateStatus.Running;

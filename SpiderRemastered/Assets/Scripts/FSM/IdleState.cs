@@ -21,7 +21,7 @@ namespace SFRemastered
                 return baseStatus;
             }
 
-            if(_blackBoard.moveDirection.magnitude > 0f)
+            if(_blackBoard.moveDirection.magnitude > 0f && !_blackBoard.isInWallState)
             {
                 _fsm.ChangeState(_walkState);
                 return StateStatus.Success;
