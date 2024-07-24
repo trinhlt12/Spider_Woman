@@ -1,5 +1,4 @@
 using EasyCharacterMovement;
-using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -7,47 +6,40 @@ namespace SFRemastered
     [CreateAssetMenu(menuName = "ScriptableObjects/States/WallRun")]
     public class WallRunState : StateBase
     {
-        [SerializeField] private float wallRunSpeed = 5f;
-        [SerializeField] private WalkState _walkState;
+        [SerializeField] private float wallRunSpeed = 10f;
+        [SerializeField] private float stickToWallForce = 20f; // Increase the stick to wall force
         [SerializeField] private JumpState _jumpState;
         [SerializeField] private FallState _fallState;
 
         public override void EnterState()
         {
             base.EnterState();
-            Vector3 velocity = _blackBoard.playerMovement.GetVelocity();
+
             _blackBoard.playerMovement.SetMovementMode(MovementMode.None);
+            _blackBoard.rigidbody.useGravity = false;
             _blackBoard.rigidbody.isKinematic = false;
-            _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-            
-            _blackBoard.isWallRunning = true;
-            _blackBoard.wallRunDirection = Vector3.Cross(_wallDetection.detectedWallNormal, Vector3.up);
-            if (_blackBoard.moveDirection.x < 0)
-            {
-                _blackBoard.wallRunDirection = -_blackBoard.wallRunDirection;
-            }
-            _blackBoard.playerMovement.SetWallRunning(true, _blackBoard.wallRunDirection, wallRunSpeed);
+            _blackBoard.onWall = true;
+            _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
+
+
             Debug.Log("Enter wall run state");
         }
 
         public override void ExitState()
         {
             base.ExitState();
-            _blackBoard.isWallRunning = false;
-            _blackBoard.playerMovement.SetWallRunning(false, Vector3.zero, 0);
-            Vector3 velocity = _blackBoard.rigidbody.velocity.projectedOnPlane(Vector3.up);
+            _blackBoard.onWall = false;
             _blackBoard.playerMovement.SetMovementMode(MovementMode.Walking);
-            _blackBoard.rigidbody.useGravity = false;
+            _blackBoard.rigidbody.useGravity = true;
             _blackBoard.rigidbody.isKinematic = true;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
-            _blackBoard.playerMovement.SetVelocity(velocity);
         }
 
         public override StateStatus UpdateState()
         {
             base.UpdateState();
 
-            if (!_wallDetection.IsWallDetected() || !_blackBoard.playerMovement.CanWallRun())
+            if (!_wallDetection.IsWallDetected())
             {
                 _fsm.ChangeState(_fallState);
                 return StateStatus.Failure;
@@ -59,9 +51,50 @@ namespace SFRemastered
                 return StateStatus.Success;
             }
 
-            _blackBoard.playerMovement.MoveAlongWall();
-            
+            ApplyWallRunMovement();
+            ApplyStickToWallForce();
+
             return StateStatus.Running;
+        }
+
+        private void ApplyWallRunMovement()
+        {
+            Vector3 wallNormal = _wallDetection.detectedWallNormal;
+            
+            // Calculate wall right and up vectors
+            Vector3 wallRight = Vector3.Cross(Vector3.up, wallNormal).normalized;
+            Vector3 wallUp = Vector3.up;
+
+            // Get the raw input
+            Vector3 inputDirection = new Vector3(_blackBoard.moveDirection.x, _blackBoard.moveDirection.y, _blackBoard.moveDirection.z);
+            // Project input onto the wall plane
+            Vector3 inputOnWall = Vector3.ProjectOnPlane(inputDirection, wallNormal).normalized;
+
+            // Calculate horizontal and vertical components
+            float horizontalInput = Vector3.Dot(inputOnWall, wallRight);
+            float verticalInput = Vector3.Dot(inputDirection, wallUp);
+
+            // Combine horizontal and vertical movements
+            Vector3 wallRunDirection = (wallRight * horizontalInput + wallUp * verticalInput).normalized;
+
+            // Apply velocity
+            Vector3 velocity = wallRunDirection * wallRunSpeed;
+            _blackBoard.rigidbody.velocity = velocity;
+
+            // Rotate the player to face the wall
+            if (wallRunDirection != Vector3.zero)
+            {
+                Quaternion targetRotation = Quaternion.LookRotation(-wallNormal, Vector3.up);
+                _blackBoard.transform.rotation = Quaternion.Slerp(_blackBoard.transform.rotation, targetRotation, Time.deltaTime * 10f);
+            }
+            
+        }
+
+        private void ApplyStickToWallForce()
+        {
+            Vector3 stickToWallVector = -_wallDetection.detectedWallNormal * stickToWallForce;
+            Debug.DrawLine(_blackBoard.playerMovement.transform.position, _blackBoard.playerMovement.transform.position + stickToWallVector*10);
+            _blackBoard.rigidbody.AddForce(stickToWallVector, ForceMode.Force);
         }
     }
 }

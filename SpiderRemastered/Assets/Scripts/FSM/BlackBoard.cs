@@ -33,6 +33,7 @@ namespace SFRemastered
         public float stickToWallDistance = 2f;
         public Vector3 wallRunDirection;
         public Vector3 detectedWallNormal;
+        public bool onWall;
 
         [Header("Zipping Mechanic")] 
         public float maxZipDistance = 50f;

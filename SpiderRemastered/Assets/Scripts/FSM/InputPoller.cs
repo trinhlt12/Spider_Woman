@@ -24,9 +24,16 @@ namespace SFRemastered
             // Add movement input in world space
 
             Vector3 movementDirection = Vector3.zero;
-
-            movementDirection += Vector3.right * movementInput.x;
-            movementDirection += Vector3.forward * movementInput.y;
+            if (!blackBoard.onWall)
+            {
+                movementDirection += Vector3.right * movementInput.x;
+                movementDirection += Vector3.forward * movementInput.y;
+            }
+            else
+            {
+                movementDirection += Vector3.right * movementInput.x;
+                movementDirection += Vector3.up * movementInput.y;
+            }
 
             // If Camera is assigned, add input movement relative to camera look direction
 
