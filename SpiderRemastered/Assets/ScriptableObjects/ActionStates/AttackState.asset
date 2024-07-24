@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85646294faba495cbbf9e2e7670de051, type: 3}
+  m_Name: AttackState
+  m_EditorClassIdentifier: 
+  canTransitionToSelf: 0
+  _mainAnimations:
+  - _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 7400000, guid: f0b5660f45a54374f89d8d3abff4b69d, type: 2}
+    _Speed: 1
+    _NormalizedStartTime: NaN
+  _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
+  _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
+  _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
+  _jumpState: {fileID: 11400000, guid: c1da1219f551cef4e9a6a3a4ec2b178e, type: 2}
+  _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}
+  _attackState: {fileID: 11400000}
+  canJump: 1
+  _actionIdleState: {fileID: 11400000, guid: dfc351ea5eead4b4594fb8408f40a344, type: 2}

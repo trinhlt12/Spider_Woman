@@ -12,17 +12,17 @@ namespace SFRemastered
         [SerializeField] private JumpState _jumpState;
         [SerializeField] private FallState _fallState;
         [SerializeField] private WallRunState _wallRunState;
-        
+
         public override void EnterState()
         {
             base.EnterState();
             _blackBoard.playerMovement.SetMovementMode(MovementMode.None);
+            _blackBoard.onWall = true;
             _blackBoard.rigidbody.useGravity = true;
             _blackBoard.rigidbody.isKinematic = false;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
             _blackBoard.rigidbody.velocity = Vector3.zero;
             _blackBoard.rigidbody.useGravity = false;
-            _blackBoard.isInWallState = true;
         }
 
         public override void ExitState()
@@ -34,8 +34,7 @@ namespace SFRemastered
             _blackBoard.rigidbody.isKinematic = true;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
             _blackBoard.playerMovement.SetVelocity(velocity);
-            
-            _blackBoard.isInWallState = false;
+
         }
 
         public override StateStatus UpdateState()
@@ -57,7 +56,7 @@ namespace SFRemastered
             }
 
             // Check this condition
-            if (_blackBoard.moveDirection.magnitude > 0f && _blackBoard.isInWallState && _wallDetection.IsWallDetected())
+            if (_blackBoard.moveDirection.magnitude > 0f && _wallDetection.IsWallDetected())
             {
                 Debug.Log(_blackBoard.moveDirection.magnitude);
                 _fsm.ChangeState(_wallRunState);
@@ -65,7 +64,7 @@ namespace SFRemastered
             }
 
             //ApplyStickToWallForce();
-            
+
             return StateStatus.Running;
         }
     }

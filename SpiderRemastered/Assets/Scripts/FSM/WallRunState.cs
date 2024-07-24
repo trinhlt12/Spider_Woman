@@ -18,9 +18,9 @@ namespace SFRemastered
             _blackBoard.playerMovement.SetMovementMode(MovementMode.None);
             _blackBoard.rigidbody.useGravity = false;
             _blackBoard.rigidbody.isKinematic = false;
+            _blackBoard.onWall = true;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotationY;
 
-            _blackBoard.isInWallState = true;
 
             Debug.Log("Enter wall run state");
         }
@@ -28,11 +28,11 @@ namespace SFRemastered
         public override void ExitState()
         {
             base.ExitState();
+            _blackBoard.onWall = false;
             _blackBoard.playerMovement.SetMovementMode(MovementMode.Walking);
             _blackBoard.rigidbody.useGravity = true;
             _blackBoard.rigidbody.isKinematic = true;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
-            _blackBoard.isInWallState = false;
         }
 
         public override StateStatus UpdateState()
@@ -67,7 +67,6 @@ namespace SFRemastered
 
             // Get the raw input
             Vector3 inputDirection = new Vector3(_blackBoard.moveDirection.x, _blackBoard.moveDirection.y, _blackBoard.moveDirection.z);
-
             // Project input onto the wall plane
             Vector3 inputOnWall = Vector3.ProjectOnPlane(inputDirection, wallNormal).normalized;
 
@@ -88,22 +87,13 @@ namespace SFRemastered
                 Quaternion targetRotation = Quaternion.LookRotation(-wallNormal, Vector3.up);
                 _blackBoard.transform.rotation = Quaternion.Slerp(_blackBoard.transform.rotation, targetRotation, Time.deltaTime * 10f);
             }
-
-            // Debug logging
-            Debug.Log($"Wall Normal: {wallNormal}");
-            Debug.Log($"Wall Right: {wallRight}");
-            Debug.Log($"Wall Up: {wallUp}");
-            Debug.Log($"Input Direction: {inputDirection}");
-            Debug.Log($"Input On Wall: {inputOnWall}");
-            Debug.Log($"Horizontal Input: {horizontalInput}");
-            Debug.Log($"Vertical Input: {verticalInput}");
-            Debug.Log($"Wall Run Direction: {wallRunDirection}");
-            Debug.Log($"Applied Velocity: {velocity}");
+            
         }
 
         private void ApplyStickToWallForce()
         {
             Vector3 stickToWallVector = -_wallDetection.detectedWallNormal * stickToWallForce;
+            Debug.DrawLine(_blackBoard.playerMovement.transform.position, _blackBoard.playerMovement.transform.position + stickToWallVector*10);
             _blackBoard.rigidbody.AddForce(stickToWallVector, ForceMode.Force);
         }
     }
