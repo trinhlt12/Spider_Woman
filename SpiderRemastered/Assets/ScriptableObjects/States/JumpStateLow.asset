@@ -23,7 +23,7 @@ MonoBehaviour:
     _Speed: 1
     _NormalizedStartTime: NaN
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
-  _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
+  _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
   _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
   jumpImpulseModifier: 0.5
   _walkState: {fileID: 11400000, guid: c1719bdf0f93a27409699b28091264e4, type: 2}

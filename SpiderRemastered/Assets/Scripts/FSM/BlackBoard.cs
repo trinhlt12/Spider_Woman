@@ -49,5 +49,6 @@ namespace SFRemastered
         public float launchBoost = 100f;
         
         public float diveBoost = 5f;
+        public bool isInWallState;
     }
 }

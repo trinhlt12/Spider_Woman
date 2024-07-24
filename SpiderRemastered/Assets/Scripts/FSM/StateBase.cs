@@ -25,7 +25,7 @@ namespace SFRemastered
         protected WallDetection _wallDetection;
         protected ZipPointerDetector _zipPointerDetector;
         [SerializeField] protected SwingState _swingState;
-        [SerializeField] protected WallRunState _wallRunState;
+        [SerializeField] protected WallRunIdleState _wallRunIdleState;
         [SerializeField] protected WebZipState _webZipState;
 
         public virtual void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
@@ -71,7 +71,7 @@ namespace SFRemastered
 
             if (_wallDetection != null && _wallDetection.IsWallDetected())
             {
-                _fsm.ChangeState(_wallRunState);
+                _fsm.ChangeState(_wallRunIdleState);
             }else if (_wallDetection == null)
             {
                 Debug.LogError("wall detection is null");

@@ -26,7 +26,7 @@ namespace SFRemastered
             _webAttachPoint = _blackBoard.webAttachPoint.transform;
             _blackBoard.webAttachPoint.canUpdatePos = false;
 
-            Vector3 velocity = _blackBoard.playerMovement.GetVelocity();
+            //Vector3 velocity = _blackBoard.playerMovement.GetVelocity();
             _blackBoard.playerMovement.SetMovementMode(MovementMode.None);
             _blackBoard.rigidbody.useGravity = true;
             _blackBoard.rigidbody.isKinematic = false;
