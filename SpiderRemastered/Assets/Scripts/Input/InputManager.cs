@@ -29,6 +29,7 @@ namespace SFRemastered.InputSystem
         public InputAction swing;
         public InputAction zip;
         public InputAction launch;
+        public InputAction attack;
 
         public bool disableInput;
 

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ab0b13018414a5ca2d77e7ff3beb2a5, type: 3}
+  m_Name: New Test
+  m_EditorClassIdentifier: 
+  canTransitionToSelf: 0
+  _mainAnimations: []
+  _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
+  _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
+  _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
+  _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
