@@ -13,15 +13,7 @@ MonoBehaviour:
   m_Name: Run_Attack02
   m_EditorClassIdentifier: 
   AttackName: RunAttack02
-  AnimationClip:
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 0}
-    _Speed: 1
-    _NormalizedStartTime: NaN
+  AnimationClip: []
   Damage: 10
   ComboWindowStart: 0.6
   ComboWindowEnd: 0.9

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using SFRemastered.InputSystem;
+using SFRemastered.Ultils;
 
 namespace SFRemastered
 {
@@ -10,12 +11,18 @@ namespace SFRemastered
         [SerializeField] private ComboConfig _comboConfig;
         [SerializeField] private IdleState _idleState;
 
+        private HitEffectManager _hitEffectManager;
         private ComboSystem _comboSystem;
         private bool _isAnimationEnding;
 
         public override void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
             base.InitState(fsm, blackBoard, isAIControlled);
+            _hitEffectManager = fsm.GetComponent<HitEffectManager>();
+            if (_hitEffectManager == null)
+            {
+                Debug.LogError("HitEffectManager not found on FSM GameObject");
+            }
             _comboSystem = new ComboSystem(_comboConfig);
         }
 
@@ -60,7 +67,7 @@ namespace SFRemastered
                 }
 
                 // Play a random clip from the array
-                if (attack.AnimationClip.Length > 0)
+                if (attack.AnimationClip is { Length: > 0 })
                 {
                     var randomIndex = Random.Range(0, attack.AnimationClip.Length);
                     _state = _blackBoard.animancer.Play(attack.AnimationClip[randomIndex]);
@@ -103,6 +110,12 @@ namespace SFRemastered
 
                     Vector3 impactDirection = Vector3.Reflect(attackDirection, hitNormal).normalized;
                     hittable.TakeHit(damage, hitPoint, impactDirection);
+                    
+                    // Play hit effect
+                    if (_hitEffectManager != null)
+                    {
+                        _hitEffectManager.PlayHitEffect(hitPoint, hitNormal);
+                    }
                 }
             }
         }
