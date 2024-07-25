@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: ComboAttackState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
-  _mainAnimations: []
+  _mainAnimations:
+  - _FadeDuration: 0
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Clip: {fileID: 0}
+    _Speed: 0
+    _NormalizedStartTime: 0
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
   _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
   _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}

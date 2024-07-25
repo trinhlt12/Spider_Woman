@@ -7,7 +7,6 @@ namespace SFRemastered
     [CreateAssetMenu(menuName = "ScriptableObjects/States/WallRunIdle")]
     public class WallRunIdleState : StateBase
     {
-        [SerializeField] private float stickToWallForce = 10f;
         [SerializeField] private WalkState _walkState;
         [SerializeField] private JumpState _jumpState;
         [SerializeField] private FallState _fallState;

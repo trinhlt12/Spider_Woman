@@ -1,13 +1,14 @@
-using SFRemastered;
-
-public abstract class ActionStateBase : StateBase
+namespace SFRemastered
 {
-    protected ActionFSM _actionFSM;
-
-    public override void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
+    public abstract class ActionStateBase : StateBase
     {
-        base.InitState(fsm, blackBoard, isAIControlled);
-        _actionFSM = fsm as ActionFSM;
-    }
+        protected global::SFRemastered.ActionFSM _actionFSM;
+
+        public override void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
+        {
+            base.InitState(fsm, blackBoard, isAIControlled);
+            _actionFSM = fsm as global::SFRemastered.ActionFSM;
+        }
     
+    }
 }

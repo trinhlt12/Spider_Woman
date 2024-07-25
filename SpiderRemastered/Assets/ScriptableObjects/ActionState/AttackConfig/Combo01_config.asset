@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Combo01_config
   m_EditorClassIdentifier: 
   Attacks:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f08e4e46662bac74191c9bd485247fda, type: 2}
+  - {fileID: 11400000, guid: a72c7b58fe416d747ae9a165786b883b, type: 2}
+  - {fileID: 11400000, guid: afe00c9691d3b6043b1baabf1ba2c169, type: 2}
   MaxComboTime: 4
   AllowComboReset: 1
   ComboDamageMultiplier:

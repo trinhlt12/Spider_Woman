@@ -1,13 +1,14 @@
-using SFRemastered.InputSystem;
 using UnityEngine;
+using Animancer;
+using SFRemastered.InputSystem;
 
 namespace SFRemastered
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/ActionStates/ComboAttackState")]
-    public class ComboAttackState : ActionStateBase
+    [CreateAssetMenu(menuName = "ScriptableObjects/States/ComboAttackState")]
+    public class ComboAttackState : StateBase
     {
         [SerializeField] private ComboConfig _comboConfig;
-        [SerializeField] private ActionIdleState _actionIdleState;
+        [SerializeField] private ActionIdleState _actionIdleState; // Reference to ActionIdleState
 
         private ComboSystem _comboSystem;
 
@@ -21,7 +22,7 @@ namespace SFRemastered
         {
             base.EnterState();
             _comboSystem.StartCombo();
-            ExecuteAttack();
+            ExecuteNextAttack();
         }
 
         public override StateStatus UpdateState()
@@ -35,19 +36,19 @@ namespace SFRemastered
             if (InputManager.instance.attack.Down && _comboSystem.CanContinueCombo())
             {
                 _comboSystem.AdvanceCombo();
-                ExecuteAttack();
+                ExecuteNextAttack();
             }
 
-            if (_state.NormalizedTime >= 1 && !_comboSystem.CanContinueCombo())
+            if (_state?.NormalizedTime >= 1 && !_comboSystem.CanContinueCombo())
             {
-                _actionFSM.ChangeState(_actionIdleState);
+                EndCombo();
                 return StateStatus.Success;
             }
 
             return StateStatus.Running;
         }
 
-        private void ExecuteAttack()
+        private void ExecuteNextAttack()
         {
             AttackData attack = _comboSystem.GetCurrentAttack();
             if (attack != null)
@@ -56,7 +57,7 @@ namespace SFRemastered
                 _comboSystem.SetCurrentAnimancerState(_state);
                 _state.Events.OnEnd += OnAttackAnimationEnd;
 
-                // Apply damage
+                // Apply damage, effects, etc.
                 float damage = attack.Damage * _comboSystem.GetComboDamageMultiplier();
                 ApplyDamage(damage, attack);
             }
@@ -64,15 +65,27 @@ namespace SFRemastered
 
         private void ApplyDamage(float damage, AttackData attack)
         {
-            //TO DO:
+            // Implement your damage application logic here
         }
 
         private void OnAttackAnimationEnd()
         {
             if (!_comboSystem.CanContinueCombo())
             {
-                _comboSystem.EndCombo();
-                _actionFSM.ChangeState(_actionFSM.GetComponent<ActionIdleState>());
+                EndCombo();
+            }
+        }
+
+        private void EndCombo()
+        {
+            _comboSystem.EndCombo();
+            if (_actionIdleState != null)
+            {
+                _fsm.ChangeState(_actionIdleState);
+            }
+            else
+            {
+                Debug.LogError("ActionIdleState is not set in ComboAttackState");
             }
         }
 
