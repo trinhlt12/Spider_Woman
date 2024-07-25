@@ -9,16 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6057b1c4139741eaa5c487b038fbfaa9, type: 3}
-  m_Name: ActionIdleState
+  m_Script: {fileID: 11500000, guid: 2e8ac17cce614e6da4c7d0bd6f9ec985, type: 3}
+  m_Name: ComboAttackState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
   _mainAnimations: []
   _swingState: {fileID: 11400000, guid: f15a5dafbe2a6aa47924d08d9beb699e, type: 2}
   _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
   _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
-  _jumpState: {fileID: 11400000, guid: c1da1219f551cef4e9a6a3a4ec2b178e, type: 2}
-  _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}
-  _attackState: {fileID: 11400000, guid: 41ca50ed5917473488d87e2b76cd8e24, type: 2}
-  canJump: 1
-  _walkState: {fileID: 11400000, guid: c1719bdf0f93a27409699b28091264e4, type: 2}
+  _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
+  _comboConfig: {fileID: 11400000, guid: 3fc9e7e43bc72194085450077b387d6f, type: 2}
+  _actionIdleState: {fileID: 11400000, guid: 1e526bac045b141499ce7fc945c6a92b, type: 2}

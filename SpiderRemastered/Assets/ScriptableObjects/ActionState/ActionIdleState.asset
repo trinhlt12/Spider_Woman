@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e8ac17cce614e6da4c7d0bd6f9ec985, type: 3}
-  m_Name: ComboAttackState
+  m_Script: {fileID: 11500000, guid: 052490832b5a4f23818e6535063aed0b, type: 3}
+  m_Name: ActionIdleState
   m_EditorClassIdentifier: 
   canTransitionToSelf: 0
   _mainAnimations: []
@@ -18,5 +18,4 @@ MonoBehaviour:
   _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
   _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
   _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
-  _comboConfig: {fileID: 11400000, guid: d12433417f215054399f8eb38e980661, type: 2}
-  _actionIdleState: {fileID: 11400000, guid: dfc351ea5eead4b4594fb8408f40a344, type: 2}
+  _comboAttackState: {fileID: 11400000, guid: 0397475532e88d248b9b55e8ea16b670, type: 2}
