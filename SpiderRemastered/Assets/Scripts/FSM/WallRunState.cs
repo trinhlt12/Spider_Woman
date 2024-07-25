@@ -6,10 +6,13 @@ namespace SFRemastered
     [CreateAssetMenu(menuName = "ScriptableObjects/States/WallRun")]
     public class WallRunState : StateBase
     {
-        [SerializeField] private float wallRunSpeed = 10f;
+        [SerializeField] private float wallRunSpeed = 25f;
         [SerializeField] private float stickToWallForce = 20f; // Increase the stick to wall force
         [SerializeField] private JumpState _jumpState;
         [SerializeField] private FallState _fallState;
+        [SerializeField] private WallRunEndState _wallRunEndState;
+        [SerializeField] private float ledgeDetectionDistance = 2f;
+        [SerializeField] private LayerMask ledgeDetectionLayerMask;
 
         public override void EnterState()
         {
@@ -50,11 +53,36 @@ namespace SFRemastered
                 _fsm.ChangeState(_jumpState);
                 return StateStatus.Success;
             }
-
-            ApplyWallRunMovement();
-            ApplyStickToWallForce();
+            
+            /*if (IsLedgeDetected())
+            {
+                _fsm.ChangeState(_wallRunEndState);
+                return StateStatus.Success;
+            }*/
 
             return StateStatus.Running;
+        }
+
+        private bool IsLedgeDetected()
+        {
+            Vector3 raycastOrigin = _blackBoard.transform.position + Vector3.up * (_blackBoard.playerCollider.height * 0.5f);
+            Vector3 raycastDirection = Vector3.up;
+
+            if (Physics.Raycast(raycastOrigin, raycastDirection, out RaycastHit hit, ledgeDetectionDistance, ledgeDetectionLayerMask))
+            {
+                Debug.DrawRay(raycastOrigin, raycastDirection * ledgeDetectionDistance, Color.green);
+                return true;
+            }
+
+            Debug.DrawRay(raycastOrigin, raycastDirection * ledgeDetectionDistance, Color.red);
+            return false;
+        }
+
+        public override void FixedUpdateState()
+        {
+            base.FixedUpdateState();
+            ApplyWallRunMovement();
+            ApplyStickToWallForce();
         }
 
         private void ApplyWallRunMovement()

@@ -11,7 +11,6 @@ namespace SFRemastered
         [SerializeField] private WalkState _walkState;
         [SerializeField] private JumpState _jumpState;
         [SerializeField] private FallState _fallState;
-        [SerializeField] private WallRunState _wallRunState;
 
         public override void EnterState()
         {

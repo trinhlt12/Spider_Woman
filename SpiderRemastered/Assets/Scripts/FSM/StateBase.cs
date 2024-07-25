@@ -27,6 +27,7 @@ namespace SFRemastered
         [SerializeField] protected SwingState _swingState;
         [SerializeField] protected WallRunIdleState _wallRunIdleState;
         [SerializeField] protected WebZipState _webZipState;
+        [SerializeField] protected WallRunState _wallRunState;
 
         public virtual void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
@@ -73,7 +74,11 @@ namespace SFRemastered
             {
                 _fsm.ChangeState(_wallRunIdleState);
             }
-            
+
+            if (_wallDetection.IsWallDetected() && _blackBoard.moveDirection.magnitude > .1f)
+            {
+                _fsm.ChangeState(_wallRunState);
+            }
             return StateStatus.Running;
         }
 
