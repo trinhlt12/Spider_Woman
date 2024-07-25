@@ -28,6 +28,7 @@ MonoBehaviour:
   _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
   _jumpState: {fileID: 11400000, guid: c1da1219f551cef4e9a6a3a4ec2b178e, type: 2}
   _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}
+  _comboAttackState: {fileID: 11400000, guid: 0397475532e88d248b9b55e8ea16b670, type: 2}
   canJump: 1
   _sprintState: {fileID: 11400000, guid: a1e8d158f33e09f45ac07e0fabc4ffd5, type: 2}
   _idleState: {fileID: 11400000, guid: b551b896c6cb1b04684787a4f4dec030, type: 2}

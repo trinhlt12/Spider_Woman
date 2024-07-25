@@ -8,9 +8,10 @@ namespace SFRemastered
     public class ComboAttackState : StateBase
     {
         [SerializeField] private ComboConfig _comboConfig;
-        [SerializeField] private ActionIdleState _actionIdleState; // Reference to ActionIdleState
+        [SerializeField] private IdleState _idleState;
 
         private ComboSystem _comboSystem;
+        private bool _isAnimationEnding = false;
 
         public override void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
@@ -22,6 +23,7 @@ namespace SFRemastered
         {
             base.EnterState();
             _comboSystem.StartCombo();
+            _isAnimationEnding = false;
             ExecuteNextAttack();
         }
 
@@ -33,16 +35,15 @@ namespace SFRemastered
                 return baseStatus;
             }
 
-            if (InputManager.instance.attack.Down && _comboSystem.CanContinueCombo())
+            if (!_isAnimationEnding && InputManager.instance.attack.Down && _comboSystem.CanContinueCombo())
             {
                 _comboSystem.AdvanceCombo();
                 ExecuteNextAttack();
             }
 
-            if (_state?.NormalizedTime >= 1 && !_comboSystem.CanContinueCombo())
+            if (_state?.NormalizedTime >= 1 && !_isAnimationEnding)
             {
-                EndCombo();
-                return StateStatus.Success;
+                OnAttackAnimationEnd();
             }
 
             return StateStatus.Running;
@@ -53,9 +54,15 @@ namespace SFRemastered
             AttackData attack = _comboSystem.GetCurrentAttack();
             if (attack != null)
             {
+                if (_state != null)
+                {
+                    _state.Events.OnEnd -= OnAttackAnimationEnd;
+                }
+
                 _state = _blackBoard.animancer.Play(attack.AnimationClip);
                 _comboSystem.SetCurrentAnimancerState(_state);
                 _state.Events.OnEnd += OnAttackAnimationEnd;
+                _isAnimationEnding = false;
 
                 // Apply damage, effects, etc.
                 float damage = attack.Damage * _comboSystem.GetComboDamageMultiplier();
@@ -65,11 +72,19 @@ namespace SFRemastered
 
         private void ApplyDamage(float damage, AttackData attack)
         {
-            // Implement your damage application logic here
+            // TO DO
         }
 
         private void OnAttackAnimationEnd()
         {
+            if (_isAnimationEnding) return;
+            _isAnimationEnding = true;
+
+            if (_state != null)
+            {
+                _state.Events.OnEnd -= OnAttackAnimationEnd;
+            }
+
             if (!_comboSystem.CanContinueCombo())
             {
                 EndCombo();
@@ -79,14 +94,7 @@ namespace SFRemastered
         private void EndCombo()
         {
             _comboSystem.EndCombo();
-            if (_actionIdleState != null)
-            {
-                _fsm.ChangeState(_actionIdleState);
-            }
-            else
-            {
-                Debug.LogError("ActionIdleState is not set in ComboAttackState");
-            }
+            _fsm.ChangeState(_idleState);
         }
 
         public override void ExitState()
@@ -97,6 +105,7 @@ namespace SFRemastered
                 _state.Events.OnEnd -= OnAttackAnimationEnd;
             }
             _comboSystem.EndCombo();
+            _isAnimationEnding = false;
         }
     }
 }

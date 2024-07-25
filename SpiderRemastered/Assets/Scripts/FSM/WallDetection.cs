@@ -30,7 +30,6 @@ namespace SFRemastered
                     {
                         Debug.DrawRay(_blackBoard.rayOrigin, direction * hit.distance, Color.green);
                         Debug.DrawRay(hit.point, hit.normal, Color.blue);
-                        Debug.Log($"Wall detected. Normal: {detectedWallNormal}, Direction: {direction}");
                     }
                     return true;
                 }
@@ -43,7 +42,6 @@ namespace SFRemastered
                 {
                     Debug.DrawRay(_blackBoard.rayOrigin, direction * _blackBoard.wallDetectionRange, Color.red);
                 }
-                Debug.Log("No wall detected.");
             }
             return false;
         }

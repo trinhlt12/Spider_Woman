@@ -27,4 +27,4 @@ MonoBehaviour:
   _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
   _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
   _comboConfig: {fileID: 11400000, guid: 3fc9e7e43bc72194085450077b387d6f, type: 2}
-  _actionIdleState: {fileID: 11400000, guid: 1e526bac045b141499ce7fc945c6a92b, type: 2}
+  _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}

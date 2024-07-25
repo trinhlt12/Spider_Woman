@@ -1,3 +1,4 @@
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -6,6 +7,7 @@ namespace SFRemastered
     {
         [SerializeField] protected JumpState _jumpState;
         [SerializeField] protected FallState _fallState;
+        [SerializeField] protected ComboAttackState _comboAttackState;
 
         public bool canJump = true;
 
@@ -26,6 +28,12 @@ namespace SFRemastered
             if (!_blackBoard.playerMovement.IsGrounded() && _blackBoard.playerMovement.GetVelocity().y < -5)
             {
                 _fsm.ChangeState(_fallState);
+                return StateStatus.Success;
+            }
+            
+            if (_blackBoard.playerMovement.IsGrounded() && InputManager.instance.attack.Down)
+            {
+                _fsm.ChangeState(_comboAttackState);
                 return StateStatus.Success;
             }
 

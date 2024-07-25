@@ -30,3 +30,8 @@ MonoBehaviour:
   stickToWallForce: 10
   _jumpState: {fileID: 11400000, guid: c1da1219f551cef4e9a6a3a4ec2b178e, type: 2}
   _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}
+  _wallRunEndState: {fileID: 11400000, guid: 1a16ffa1fe7b6494eb27949f150f2cff, type: 2}
+  ledgeDetectionDistance: 2
+  ledgeDetectionLayerMask:
+    serializedVersion: 2
+    m_Bits: 64

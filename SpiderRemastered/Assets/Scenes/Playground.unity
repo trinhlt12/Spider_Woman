@@ -5101,7 +5101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3350882665949648572, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: _states.Array.size
-      value: 21
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 3350882665949648572, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: _states.Array.data[13]
@@ -5135,6 +5135,10 @@ PrefabInstance:
       propertyPath: _states.Array.data[20]
       value: 
       objectReference: {fileID: 11400000, guid: 1a16ffa1fe7b6494eb27949f150f2cff, type: 2}
+    - target: {fileID: 3350882665949648572, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
+      propertyPath: _states.Array.data[21]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0397475532e88d248b9b55e8ea16b670, type: 2}
     - target: {fileID: 5459646892774124854, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: _camera
       value: 
@@ -5380,17 +5384,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 821177532}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07111ab976f94654bac6cdfd97a9b0df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _isAIControlled: 0
-  _startingState: {fileID: 11400000, guid: 1e526bac045b141499ce7fc945c6a92b, type: 2}
+  _startingState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}
   _currentState: {fileID: 0}
   _previousState: {fileID: 0}
   _states:
-  - {fileID: 11400000, guid: 1e526bac045b141499ce7fc945c6a92b, type: 2}
   - {fileID: 11400000, guid: 0397475532e88d248b9b55e8ea16b670, type: 2}
 --- !u!1001 &8851246979688706763
 PrefabInstance:

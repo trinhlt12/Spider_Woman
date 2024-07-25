@@ -1,26 +1,33 @@
-using SFRemastered;
 using SFRemastered.InputSystem;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObjects/ActionStates/ActionIdleState")]
-public class ActionIdleState : ActionStateBase
+namespace SFRemastered
 {
-    [SerializeField] private ComboAttackState _comboAttackState;
-
-    public override StateStatus UpdateState()
+    [CreateAssetMenu(menuName = "ScriptableObjects/ActionStates/ActionIdleState")]
+    public class ActionIdleState : GroundState
     {
-        StateStatus baseStatus = base.UpdateState();
-        if (baseStatus != StateStatus.Running)
-        {
-            return baseStatus;
-        }
+        [SerializeField] private WalkState _walkState;
 
-        if (InputManager.instance.attack.Down)
+        public override void EnterState()
         {
-            _actionFSM.ChangeState(_comboAttackState);
-            return StateStatus.Success;
+            base.EnterState();
+            _blackBoard.playerMovement.SetMovementDirection(Vector3.zero);
         }
+        public override StateStatus UpdateState()
+        {
+            StateStatus baseStatus = base.UpdateState();
+            if(baseStatus != StateStatus.Running)
+            {
+                return baseStatus;
+            }
 
-        return StateStatus.Running;
+            if(_blackBoard.moveDirection.magnitude > 0f && !_blackBoard.isInWallState)
+            {
+                _fsm.ChangeState(_walkState);
+                return StateStatus.Success;
+            }
+
+            return StateStatus.Running;
+        }
     }
 }
