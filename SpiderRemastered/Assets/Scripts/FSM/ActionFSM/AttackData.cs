@@ -7,8 +7,8 @@ namespace SFRemastered
     public class AttackData : ScriptableObject
     {
         public string AttackName;
-        public ClipTransition AnimationClip;
-        public float Damage;
+        public ClipTransition[] AnimationClip;
+        public float Damage = 10f;
         [Range(0, 1)] public float ComboWindowStart = 0.6f;
         [Range(0, 1)] public float ComboWindowEnd = 0.9f;
         public float AttackRange = 1.5f;

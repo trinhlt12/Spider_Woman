@@ -1,6 +1,7 @@
 using Animancer;
 using System.Collections;
 using System.Collections.Generic;
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -12,6 +13,8 @@ namespace SFRemastered
         [SerializeField] private SprintTurn180State _turn180State;
         [SerializeField] private SprintToIdleState _sprintToIdleState;
         [SerializeField] private LinearMixerTransition _sprintingBlendTree;
+        [SerializeField] protected ComboAttackState _comboAttackState;
+
 
         public override void EnterState()
         {
@@ -64,6 +67,12 @@ namespace SFRemastered
             if(Vector3.Angle(_fsm.transform.forward, _blackBoard.moveDirection) > 150f && elapsedTime > .2f)
             {
                 _fsm.ChangeState(_turn180State);
+                return StateStatus.Success;
+            }
+
+            if (_blackBoard.sprint && InputManager.instance.attack.Down)
+            {
+                _fsm.ChangeState(_comboAttackState);
                 return StateStatus.Success;
             }
 

@@ -1,5 +1,5 @@
+using DG.Tweening;
 using UnityEngine;
-using Animancer;
 using SFRemastered.InputSystem;
 
 namespace SFRemastered
@@ -11,7 +11,7 @@ namespace SFRemastered
         [SerializeField] private IdleState _idleState;
 
         private ComboSystem _comboSystem;
-        private bool _isAnimationEnding = false;
+        private bool _isAnimationEnding;
 
         public override void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
@@ -59,9 +59,19 @@ namespace SFRemastered
                     _state.Events.OnEnd -= OnAttackAnimationEnd;
                 }
 
-                _state = _blackBoard.animancer.Play(attack.AnimationClip);
+                // Play a random clip from the array
+                if (attack.AnimationClip.Length > 0)
+                {
+                    var randomIndex = Random.Range(0, attack.AnimationClip.Length);
+                    _state = _blackBoard.animancer.Play(attack.AnimationClip[randomIndex]);
+                }
+                else
+                {
+                    Debug.LogError("No animation clips found in AttackData.");
+                }
+
                 _comboSystem.SetCurrentAnimancerState(_state);
-                _state.Events.OnEnd += OnAttackAnimationEnd;
+                if (_state != null) _state.Events.OnEnd += OnAttackAnimationEnd;
                 _isAnimationEnding = false;
 
                 // Apply damage, effects, etc.
@@ -72,7 +82,29 @@ namespace SFRemastered
 
         private void ApplyDamage(float damage, AttackData attack)
         {
-            // TO DO
+            Vector3 attackOrigin =
+                _blackBoard.transform.position + _blackBoard.transform.forward * attack.AttackRange / 2f;
+            Vector3 attackDirection = _blackBoard.transform.forward;
+
+            Collider[] hitColliders = Physics.OverlapBox(
+                attackOrigin,
+                attack.HitboxSize / 2f,
+                _blackBoard.transform.rotation,
+                LayerMask.GetMask("Enemy")
+            );
+
+            foreach (var hitCollider in hitColliders)
+            {
+                IHittable hittable = hitCollider.GetComponent<IHittable>();
+                if (hittable != null)
+                {
+                    Vector3 hitPoint = hitCollider.ClosestPoint(attackOrigin);
+                    Vector3 hitNormal = (hitPoint - attackOrigin).normalized;
+
+                    Vector3 impactDirection = Vector3.Reflect(attackDirection, hitNormal).normalized;
+                    hittable.TakeHit(damage, hitPoint, impactDirection);
+                }
+            }
         }
 
         private void OnAttackAnimationEnd()

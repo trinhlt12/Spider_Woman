@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -7,6 +8,8 @@ namespace SFRemastered
     public class IdleState : GroundState
     {
         [SerializeField] private WalkState _walkState;
+        [SerializeField] protected ComboAttackState _comboAttackState;
+
 
         public override void EnterState()
         {
@@ -24,6 +27,12 @@ namespace SFRemastered
             if(_blackBoard.moveDirection.magnitude > 0f && !_blackBoard.isInWallState)
             {
                 _fsm.ChangeState(_walkState);
+                return StateStatus.Success;
+            }
+            
+            if (_blackBoard.playerMovement.IsGrounded() && InputManager.instance.attack.Down)
+            {
+                _fsm.ChangeState(_comboAttackState);
                 return StateStatus.Success;
             }
 

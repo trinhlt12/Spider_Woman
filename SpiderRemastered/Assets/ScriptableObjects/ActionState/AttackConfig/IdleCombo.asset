@@ -9,42 +9,32 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 075a78a32bed46e2a316abb83535e717, type: 3}
-  m_Name: Attack02
+  m_Script: {fileID: 11500000, guid: 800f782eb1564288830c657a9a91431e, type: 3}
+  m_Name: IdleCombo
   m_EditorClassIdentifier: 
-  AttackName: Attack02
-  AnimationClip:
-  - _FadeDuration: 0.25
-    _Events:
-      _NormalizedTimes: []
-      _Callbacks: []
-      _Names: []
-    _Clip: {fileID: 7400000, guid: eb546acabdd7d284f9279f31ef86efd5, type: 2}
-    _Speed: 1.2
-    _NormalizedStartTime: NaN
-  Damage: 0
-  ComboWindowStart: 0.6
-  ComboWindowEnd: 0.9
-  AttackRange: 1.5
-  HitboxSize: {x: 1, y: 1, z: 1}
-  HitboxOffset: {x: 0, y: 0, z: 0}
-  KnockbackForce: 5
-  DamageCurve:
+  Attacks:
+  - {fileID: 11400000, guid: f08e4e46662bac74191c9bd485247fda, type: 2}
+  - {fileID: 11400000, guid: a72c7b58fe416d747ae9a165786b883b, type: 2}
+  - {fileID: 11400000, guid: afe00c9691d3b6043b1baabf1ba2c169, type: 2}
+  - {fileID: 11400000, guid: 48ef5fbfcc8c1cf45a755739977c30f1, type: 2}
+  MaxComboTime: 4
+  AllowComboReset: 1
+  ComboDamageMultiplier:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 1
       inSlope: 0
-      outSlope: 0
+      outSlope: 1
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 1
-      inSlope: 0
+      value: 2
+      inSlope: 1
       outSlope: 0
       tangentMode: 0
       weightedMode: 0

@@ -28,7 +28,6 @@ MonoBehaviour:
   _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
   _jumpState: {fileID: 11400000, guid: c1da1219f551cef4e9a6a3a4ec2b178e, type: 2}
   _fallState: {fileID: 11400000, guid: b4ed73479dbcc414ca0bbd1a2e498fd0, type: 2}
-  _comboAttackState: {fileID: 11400000, guid: 0397475532e88d248b9b55e8ea16b670, type: 2}
   canJump: 1
   _walkState: {fileID: 11400000, guid: c1719bdf0f93a27409699b28091264e4, type: 2}
   _turn180State: {fileID: 11400000, guid: 5fc2babc776ad2e47bd845729fab430b, type: 2}
@@ -54,3 +53,4 @@ MonoBehaviour:
     - 10.8
     _DefaultParameter: 0
     _ExtrapolateSpeed: 1
+  _comboAttackState: {fileID: 11400000, guid: 0a671156ab888b14f9bb5cc1c9209faf, type: 2}

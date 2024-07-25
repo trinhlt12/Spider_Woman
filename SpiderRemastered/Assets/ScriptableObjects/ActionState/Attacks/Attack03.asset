@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackName: Attack03
   AnimationClip:
-    _FadeDuration: 0.25
+  - _FadeDuration: 0.25
     _Events:
       _NormalizedTimes: []
       _Callbacks: []
       _Names: []
-    _Clip: {fileID: 7400000, guid: f0b5660f45a54374f89d8d3abff4b69d, type: 2}
-    _Speed: 1
+    _Clip: {fileID: 7400000, guid: 68c83d40363a81442a6f65e0dddac2a1, type: 2}
+    _Speed: 1.2
     _NormalizedStartTime: NaN
-  Damage: 0
+  Damage: 10
   ComboWindowStart: 0.6
   ComboWindowEnd: 0.9
   AttackRange: 1.5
