@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Animancer;
 using SFRemastered.InputSystem;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace SFRemastered
         protected bool _isAIControlled;
         public bool canTransitionToSelf = false;
         public float elapsedTime { get; private set; }
-        [SerializeField] protected ClipTransition[] _mainAnimations;
+        [SerializeField] protected List<ClipTransition> _mainAnimations;
         protected AnimancerState _state;
         protected WallDetection _wallDetection;
         protected ZipPointerDetector _zipPointerDetector;
@@ -43,9 +44,9 @@ namespace SFRemastered
              Debug.Log("Entering State: " + this);
             elapsedTime = 0;
 
-            if(_mainAnimations != null && _mainAnimations.Length > 0)
+            if(_mainAnimations is { Count: > 0 })
             {
-                int randomIndex = Random.Range(0, _mainAnimations.Length);
+                int randomIndex = Random.Range(0, _mainAnimations.Count);
                 ClipTransition randomClipTransition = _mainAnimations[randomIndex];
 
                 if(randomClipTransition.Clip != null)

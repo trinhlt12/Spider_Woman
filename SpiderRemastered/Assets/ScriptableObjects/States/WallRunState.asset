@@ -35,3 +35,22 @@ MonoBehaviour:
   ledgeDetectionLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  _wallRunBlendTree:
+    _FadeDuration: 0.25
+    _Events:
+      _NormalizedTimes: []
+      _Callbacks: []
+      _Names: []
+    _Speed: 1
+    _Animations:
+    - {fileID: 7400000, guid: c1d5a1ac791f3e24dbbc621cc41baa18, type: 3}
+    - {fileID: 7400000, guid: 6672aa995399a80488527140fbbd1edf, type: 3}
+    - {fileID: 7400000, guid: c07a3b319de7a86429c788ab0ee5a20b, type: 3}
+    _Speeds: []
+    _SynchronizeChildren: 000000
+    _Thresholds:
+    - -1
+    - 0
+    - 1
+    _DefaultParameter: 0
+    _ExtrapolateSpeed: 1

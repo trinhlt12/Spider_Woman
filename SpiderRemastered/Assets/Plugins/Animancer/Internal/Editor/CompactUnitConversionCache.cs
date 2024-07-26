@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEditor;
+using UnityEngine;
 
 namespace Animancer.Editor
 {
@@ -156,8 +157,11 @@ namespace Animancer.Editor
         /// <summary>Creates and returns a cache for the specified `characterCount`.</summary>
         private ConversionCache<float, string> GetCache(int characterCount)
         {
+            // Ensure the Caches list has enough elements.
             while (Caches.Count <= characterCount)
+            {
                 Caches.Add(null);
+            }
 
             var cache = Caches[characterCount];
             if (cache == null)

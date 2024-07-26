@@ -28,28 +28,5 @@ namespace SFRemastered
 
             return characterMovement.ConstrainVectorToPlane(desiredVelocity);
         }
-
-        public void SetWallRunning(bool isWallRunning, Vector3 wallRunDirection, float wallRunSpeed)
-        {
-            BlackBoard.isWallRunning = isWallRunning;
-            BlackBoard.wallRunDirection = wallRunDirection;
-            BlackBoard.wallRunSpeed = wallRunSpeed;
-        }
-
-        public bool CanWallRun()
-        {
-            return BlackBoard.isWallRunning;
-        }
-        public void MoveAlongWall()
-        {
-            if (BlackBoard.isWallRunning)
-            {
-                //Debug.Log("Is wall running");
-                Vector3 wallRunVelocity = (BlackBoard.wallRunDirection + BlackBoard.moveDirection) * BlackBoard.wallRunSpeed / 2;
-               // Debug.Log("Wall run velocity: " + wallRunVelocity);
-                characterMovement.velocity = wallRunVelocity;
-               // Debug.Log("characterMovement.velocity = " + characterMovement.velocity);
-            }
-        }
     }
 }

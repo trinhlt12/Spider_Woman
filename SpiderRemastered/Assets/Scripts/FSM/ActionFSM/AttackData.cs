@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Animancer;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace SFRemastered
     public class AttackData : ScriptableObject
     {
         public string AttackName;
-        public ClipTransition[] AnimationClip;
+        public List<ClipTransition> AnimationClip;
         public float Damage = 10f;
         [Range(0, 1)] public float ComboWindowStart = 0.6f;
         [Range(0, 1)] public float ComboWindowEnd = 0.9f;

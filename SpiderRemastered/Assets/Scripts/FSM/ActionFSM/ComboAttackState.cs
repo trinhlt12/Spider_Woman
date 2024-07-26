@@ -2,6 +2,7 @@ using DG.Tweening;
 using UnityEngine;
 using SFRemastered.InputSystem;
 using SFRemastered.Ultils;
+// ReSharper disable All
 
 namespace SFRemastered
 {
@@ -31,6 +32,10 @@ namespace SFRemastered
             base.EnterState();
             _comboSystem.StartCombo();
             _isAnimationEnding = false;
+            _blackBoard.playerMovement.useRootMotion = true;
+            _blackBoard.rigidbody.isKinematic = false;
+            _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            _blackBoard.rigidbody.velocity = Vector3.zero;
             ExecuteNextAttack();
         }
 
@@ -67,9 +72,9 @@ namespace SFRemastered
                 }
 
                 // Play a random clip from the array
-                if (attack.AnimationClip is { Length: > 0 })
+                if (attack.AnimationClip != null && attack.AnimationClip.Count > 0)
                 {
-                    var randomIndex = Random.Range(0, attack.AnimationClip.Length);
+                    int randomIndex = Random.Range(0, attack.AnimationClip.Count);
                     _state = _blackBoard.animancer.Play(attack.AnimationClip[randomIndex]);
                 }
                 else
@@ -139,7 +144,9 @@ namespace SFRemastered
         private void EndCombo()
         {
             _comboSystem.EndCombo();
+            _blackBoard.playerMovement.useRootMotion = false;
             _fsm.ChangeState(_idleState);
+            _blackBoard.playerMovement.SetVelocity(Vector3.zero);
         }
 
         public override void ExitState()
@@ -151,6 +158,10 @@ namespace SFRemastered
             }
             _comboSystem.EndCombo();
             _isAnimationEnding = false;
+            _blackBoard.rigidbody.velocity = Vector3.zero;
+            _blackBoard.rigidbody.isKinematic = true;
+            _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
+            _blackBoard.playerMovement.useRootMotion = false;
         }
     }
 }
