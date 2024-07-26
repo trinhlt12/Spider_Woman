@@ -49,5 +49,12 @@ namespace SFRemastered
         
         public float diveBoost = 5f;
         public bool isInWallState;
+
+        [Header("Combat System")] 
+        public bool inAttackMode;
+        public float attackRange;
+        public float mediumRange;
+        public float farRange;
+        
     }
 }

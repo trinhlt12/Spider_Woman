@@ -79,6 +79,7 @@ namespace SFRemastered
             _isComboActive = false;
             _currentComboIndex = -1;
             _currentAnimancerState = null;
+            
         }
 
         public bool IsComboActive()

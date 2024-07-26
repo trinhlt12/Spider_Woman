@@ -1,7 +1,10 @@
 using DG.Tweening;
+using EasyCharacterMovement;
 using UnityEngine;
 using SFRemastered.InputSystem;
 using SFRemastered.Ultils;
+using UnityEngine.Serialization;
+
 // ReSharper disable All
 
 namespace SFRemastered
@@ -11,10 +14,13 @@ namespace SFRemastered
     {
         [SerializeField] private ComboConfig _comboConfig;
         [SerializeField] private IdleState _idleState;
+        [SerializeField] private SprintState _sprintState;
 
         private HitEffectManager _hitEffectManager;
         private ComboSystem _comboSystem;
+        private CameraController _cameraController;
         private bool _isAnimationEnding;
+        private Transform _lockedTarget;
 
         public override void InitState(FSM fsm, BlackBoard blackBoard, bool isAIControlled)
         {
@@ -25,17 +31,20 @@ namespace SFRemastered
                 Debug.LogError("HitEffectManager not found on FSM GameObject");
             }
             _comboSystem = new ComboSystem(_comboConfig);
+            _cameraController = Camera.main.GetComponent<CameraController>();
         }
 
         public override void EnterState()
         {
             base.EnterState();
+            _blackBoard.inAttackMode = true;
             _comboSystem.StartCombo();
             _isAnimationEnding = false;
             _blackBoard.playerMovement.useRootMotion = true;
             _blackBoard.rigidbody.isKinematic = false;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
             _blackBoard.rigidbody.velocity = Vector3.zero;
+            //LockOntoClosestEnemy();
             ExecuteNextAttack();
         }
 
@@ -94,8 +103,9 @@ namespace SFRemastered
 
         private void ApplyDamage(float damage, AttackData attack)
         {
+            _blackBoard.attackRange = attack.HitboxSize.magnitude / 2f;
             Vector3 attackOrigin =
-                _blackBoard.transform.position + _blackBoard.transform.forward * attack.AttackRange / 2f;
+                _blackBoard.transform.position + _blackBoard.transform.forward * _blackBoard.attackRange / 2f;
             Vector3 attackDirection = _blackBoard.transform.forward;
 
             Collider[] hitColliders = Physics.OverlapBox(
@@ -134,6 +144,8 @@ namespace SFRemastered
             {
                 _state.Events.OnEnd -= OnAttackAnimationEnd;
             }
+            
+            _blackBoard.playerMovement.useRootMotion = false;
 
             if (!_comboSystem.CanContinueCombo())
             {
@@ -144,7 +156,6 @@ namespace SFRemastered
         private void EndCombo()
         {
             _comboSystem.EndCombo();
-            _blackBoard.playerMovement.useRootMotion = false;
             _fsm.ChangeState(_idleState);
             _blackBoard.playerMovement.SetVelocity(Vector3.zero);
         }
@@ -162,6 +173,24 @@ namespace SFRemastered
             _blackBoard.rigidbody.isKinematic = true;
             _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
             _blackBoard.playerMovement.useRootMotion = false;
+        }
+
+        private void MoveTowardsTarget()
+        {
+            if(_lockedTarget == null) return;
+            
+            float distance = Vector3.Distance(_blackBoard.transform.position, _lockedTarget.position);
+            
+            _blackBoard.mediumRange = _blackBoard.attackRange * 2f;
+            _blackBoard.farRange = _blackBoard.attackRange * 3f;
+            
+            Vector3 direction = (_lockedTarget.position - _blackBoard.transform.position).normalized;
+            float maxSpeed = _blackBoard.playerMovement.GetMaxSpeed();
+            
+            if (distance > _blackBoard.attackRange)
+            {
+                
+            }
         }
     }
 }
