@@ -1039,12 +1039,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 353414163}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.2005149, y: 1, z: 5.3025966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2102617952}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &353414165
 Rigidbody:
@@ -2110,12 +2110,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826975109}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.500515, y: 1, z: 5.3025966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2102617952}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &826975111
 MonoBehaviour:
@@ -3233,7 +3233,7 @@ Transform:
   m_GameObject: {fileID: 1408434821}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.167, y: 1.9785, z: -5}
+  m_LocalPosition: {x: 0, y: 2, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3346,6 +3346,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 821177544}
   lockOnSmoothing: 5
+  BlackBoard: {fileID: 821177550}
   CinemachineCameraTarget: {fileID: 1555859554}
   TopClamp: 80
   BottomClamp: -60
@@ -3355,6 +3356,7 @@ MonoBehaviour:
   _cinemachineTargetPitch: 0
   virtualCamera: {fileID: 1581830105}
   lockOnFOV: 40
+  fovTransitionDuration: 0.5
 --- !u!4 &1434564582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4238633897921614, guid: ab28e8006e210aa4480fe64bd6fa7208, type: 3}
@@ -5311,9 +5313,7 @@ Transform:
   m_LocalPosition: {x: -1.2005149, y: 1, z: 5.3025966}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 353414164}
-  - {fileID: 826975110}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2131687603 stripped
@@ -5396,15 +5396,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 741930399825075465, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.167
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 741930399825075465, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1541460229291346478, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.167
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1541460229291346478, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.9785
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1541460229291346478, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5570,6 +5574,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7182729438060406318, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
+      propertyPath: BlackBoard
+      value: 
+      objectReference: {fileID: 821177550}
     - target: {fileID: 7182729438060406318, guid: dbb92de03e90df04ab633aba5b7ef1d2, type: 3}
       propertyPath: virtualCamera
       value: 
@@ -5773,7 +5781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f11912c8694c63b40f7c5766db5506, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _blackBoard: {fileID: 0}
+  _blackBoard: {fileID: 821177550}
   detectionRadius: 10
   enemyLayerMask:
     serializedVersion: 2
@@ -5855,4 +5863,6 @@ SceneRoots:
   - {fileID: 4496070970909889249}
   - {fileID: 8851246979688706763}
   - {fileID: 270621629}
+  - {fileID: 353414164}
+  - {fileID: 826975110}
   - {fileID: 2102617952}

@@ -10,6 +10,7 @@ namespace SFRemastered
         [SerializeField] private Transform playerTransform;
         [SerializeField] private float lockOnSmoothing = 5f;
         
+        public BlackBoard BlackBoard;
         public GameObject CinemachineCameraTarget;
         public float TopClamp = 70.0f;
         public float BottomClamp = -30.0f;
@@ -119,6 +120,8 @@ namespace SFRemastered
             {
                 lockedTarget = null;
             }
+            
+            BlackBoard.playerMovement.SetCameraLockState(isLocked);
         }
 
         private IEnumerator TransitionFOV(float targetFOV)

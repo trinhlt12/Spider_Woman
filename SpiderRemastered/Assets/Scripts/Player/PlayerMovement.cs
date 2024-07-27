@@ -8,25 +8,33 @@ namespace SFRemastered
 {
     public class PlayerMovement : Character
     {
-        public float rootmotionSpeedMult = 1;
+        public float rootmotionSpeedMult = 0.01f;
         public BlackBoard BlackBoard;
+        private bool isCameraLocked = false;
+        private bool _isLockTargetState;
+
         protected override void HandleInput(){}
 
         protected override Vector3 CalcDesiredVelocity()
         {
-            // Current movement direction
-
             Vector3 movementDirection = GetMovementDirection();
-
-            // The desired velocity from animation (if using root motion) or from input movement vector
-
             Vector3 desiredVelocity = useRootMotion && rootMotionController
                 ? rootMotionController.ConsumeRootMotionVelocity(deltaTime) * rootmotionSpeedMult
                 : movementDirection * GetMaxSpeed();
 
-            // Return desired velocity (constrained to constraint plane if any)
-
             return characterMovement.ConstrainVectorToPlane(desiredVelocity);
+        }
+
+        public void SetCameraLockState(bool isLocked)
+        {
+            isCameraLocked = isLocked;
+            SetRotationMode(isLocked ? RotationMode.None : RotationMode.OrientToMovement);
+        }
+
+        protected override void CustomRotationMode()
+        {
+            base.CustomRotationMode();
+            
         }
     }
 }

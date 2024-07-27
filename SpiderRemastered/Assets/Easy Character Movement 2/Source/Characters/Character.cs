@@ -43,7 +43,8 @@ namespace EasyCharacterMovement
         OrientToMovement,
         OrientToCameraViewDirection,
         OrientWithRootMotion,
-        Custom
+        Custom,
+        LockOnTarget
     }
 
     #endregion
@@ -1795,6 +1796,7 @@ namespace EasyCharacterMovement
             MovementMode prevMovementMode = _movementMode;
             int prevCustomMode = _customMovementMode;
 
+
             _movementMode = newMovementMode;
             _customMovementMode = newCustomMode;
 
@@ -2925,6 +2927,10 @@ namespace EasyCharacterMovement
         protected virtual void CustomRotationMode()
         {
             // EMPTY BY DEFAULT
+            if(_rotationMode == RotationMode.Custom)
+            {
+                // Custom rotation mode
+            }
         }
 
         /// <summary>

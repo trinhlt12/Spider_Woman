@@ -17,7 +17,7 @@ namespace SFRemastered
 
             _blackBoard.playerMovement.useRootMotion = true;
 
-            _blackBoard.playerMovement.rootmotionSpeedMult = 2f;
+            _blackBoard.playerMovement.rootmotionSpeedMult = 0.01f;
 
             _blackBoard.playerMovement.SetRotationMode(EasyCharacterMovement.RotationMode.OrientWithRootMotion);
 
@@ -53,7 +53,7 @@ namespace SFRemastered
 
             _blackBoard.playerMovement.useRootMotion = false;
 
-            _blackBoard.playerMovement.rootmotionSpeedMult = 1f;
+            _blackBoard.playerMovement.rootmotionSpeedMult = 0.01f;
 
             _blackBoard.playerMovement.SetRotationMode(EasyCharacterMovement.RotationMode.OrientToMovement);
         }

@@ -55,6 +55,7 @@ namespace SFRemastered
         public float attackRange;
         public float mediumRange;
         public float farRange;
+        public Transform lockedTarget;
         
     }
 }

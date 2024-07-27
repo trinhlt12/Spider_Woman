@@ -186,11 +186,6 @@ namespace SFRemastered
             
             Vector3 direction = (_lockedTarget.position - _blackBoard.transform.position).normalized;
             float maxSpeed = _blackBoard.playerMovement.GetMaxSpeed();
-            
-            if (distance > _blackBoard.attackRange)
-            {
-                
-            }
         }
     }
 }
