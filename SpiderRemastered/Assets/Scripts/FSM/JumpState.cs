@@ -1,6 +1,7 @@
 using Animancer;
 using System.Collections;
 using System.Collections.Generic;
+using SFRemastered.InputSystem;
 using UnityEngine;
 
 namespace SFRemastered
@@ -11,6 +12,7 @@ namespace SFRemastered
         [SerializeField] private float jumpImpulseModifier = 1f;
         [SerializeField] private WalkState _walkState;
         [SerializeField] private FallState _fallState;
+        [SerializeField] private ZipAttackState _zipAttackState;
         
         [SerializeField] private ClipTransition _fallLoopAnimation;
 
@@ -52,6 +54,11 @@ namespace SFRemastered
             {
                 _fsm.ChangeState(_fallState);
                 return StateStatus.Success;
+            }
+
+            if (InputManager.instance.attack.Down)
+            {
+                _fsm.ChangeState(_zipAttackState);
             }
 
             return StateStatus.Running;

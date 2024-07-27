@@ -27,7 +27,7 @@ namespace SFRemastered
         private Transform lockedTarget;
         private bool isLocked = false;
         [SerializeField] private CinemachineVirtualCamera virtualCamera;
-        [SerializeField] private float lockOnFOV = 40f;
+        [SerializeField] private float lockOnFOV = 50;
         [SerializeField] private float fovTransitionDuration = 0.5f;
         private float defaultFOV;
         private Coroutine fovTransitionCoroutine;

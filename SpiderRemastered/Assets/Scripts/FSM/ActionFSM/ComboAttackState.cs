@@ -17,7 +17,7 @@ namespace SFRemastered
         [SerializeField] private SprintState _sprintState;
 
         private HitEffectManager _hitEffectManager;
-        private ComboSystem _comboSystem;
+        protected ComboSystem _comboSystem;
         private CameraController _cameraController;
         private bool _isAnimationEnding;
         private Transform _lockedTarget;
@@ -70,7 +70,7 @@ namespace SFRemastered
             return StateStatus.Running;
         }
 
-        private void ExecuteNextAttack()
+        protected void ExecuteNextAttack()
         {
             AttackData attack = _comboSystem.GetCurrentAttack();
             if (attack != null)
@@ -101,7 +101,7 @@ namespace SFRemastered
             }
         }
 
-        private void ApplyDamage(float damage, AttackData attack)
+        protected void ApplyDamage(float damage, AttackData attack)
         {
             _blackBoard.attackRange = attack.HitboxSize.magnitude / 2f;
             Vector3 attackOrigin =
