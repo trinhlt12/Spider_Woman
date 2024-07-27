@@ -13,7 +13,6 @@ namespace SFRemastered
         [SerializeField] private SprintTurn180State _turn180State;
         [SerializeField] private SprintToIdleState _sprintToIdleState;
         [SerializeField] private LinearMixerTransition _sprintingBlendTree;
-        [SerializeField] protected ComboAttackState _comboAttackState;
 
 
         public override void EnterState()

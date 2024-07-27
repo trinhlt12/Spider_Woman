@@ -12,7 +12,6 @@ namespace SFRemastered
         [SerializeField] private IdleState _idleState;
         [SerializeField] private SprintState _sprintState;
         [SerializeField] private WalkToIdleState _walkToIdleState;
-        [SerializeField] private ComboAttackState _comboAttackState;
         [SerializeField] private LinearMixerTransition _walkingBlendTree;
 
         public override void EnterState()
@@ -45,12 +44,6 @@ namespace SFRemastered
                 _fsm.ChangeState(_walkToIdleState);
                 return StateStatus.Success;
             }
-
-            if (InputManager.instance.attack.Down)
-            {
-                _fsm.ChangeState(_comboAttackState);
-            }
-
             return StateStatus.Running;
         }
     }

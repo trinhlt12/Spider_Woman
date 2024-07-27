@@ -20,7 +20,7 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 02533fddf0601cc4ba2ed1890c41a4a1, type: 2}
-    _Speed: 1.2
+    _Speed: 1.5
     _NormalizedStartTime: NaN
   - _FadeDuration: 0.25
     _Events:
@@ -28,7 +28,7 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 0f131bfe6d486e74590fef0ed2e780c7, type: 2}
-    _Speed: 1.2
+    _Speed: 1.5
     _NormalizedStartTime: NaN
   Damage: 10
   ComboWindowStart: 0.6

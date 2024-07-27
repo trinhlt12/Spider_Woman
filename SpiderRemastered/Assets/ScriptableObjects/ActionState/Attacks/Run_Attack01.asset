@@ -20,7 +20,7 @@ MonoBehaviour:
       _Callbacks: []
       _Names: []
     _Clip: {fileID: 7400000, guid: 02533fddf0601cc4ba2ed1890c41a4a1, type: 2}
-    _Speed: 1.2
+    _Speed: 1.5
     _NormalizedStartTime: NaN
   Damage: 10
   ComboWindowStart: 0.6

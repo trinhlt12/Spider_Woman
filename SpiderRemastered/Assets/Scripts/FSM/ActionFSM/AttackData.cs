@@ -17,5 +17,7 @@ namespace SFRemastered
         public Vector3 HitboxOffset = Vector3.zero;
         public float KnockbackForce = 5f;
         public AnimationCurve DamageCurve = AnimationCurve.Linear(0, 1, 1, 1);
+        
+        //
     }
 }

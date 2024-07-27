@@ -7,6 +7,8 @@ namespace SFRemastered
     {
         [SerializeField] protected JumpState _jumpState;
         [SerializeField] protected FallState _fallState;
+        [SerializeField] protected ComboAttackState _comboAttackState;
+
 
         public bool canJump = true;
 
@@ -30,7 +32,11 @@ namespace SFRemastered
                 return StateStatus.Success;
             }
             
-            
+            if (_blackBoard.playerMovement.IsGrounded() && InputManager.instance.attack.Down)
+            {
+                _fsm.ChangeState(_comboAttackState);
+                return StateStatus.Success;
+            }
 
             return StateStatus.Running;
         }

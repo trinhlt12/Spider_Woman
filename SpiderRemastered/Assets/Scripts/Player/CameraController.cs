@@ -81,20 +81,24 @@ namespace SFRemastered
 
         private void LockOnTarget()
         {
-            Vector3 directionToTarget = (lockedTarget.position - transform.position).normalized;
+            Vector3 directionToTarget = (lockedTarget.position - playerTransform.position).normalized;
             Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
 
-            // Smoothly interpolate between current rotation and target rotation
-            CinemachineCameraTarget.transform.rotation = Quaternion.Slerp(
-                CinemachineCameraTarget.transform.rotation,
-                targetRotation,
-                lockOnSmoothing * Time.deltaTime
-            );
+            // Calculate the desired yaw and pitch
+            Vector3 targetAngles = targetRotation.eulerAngles;
+            float targetYaw = targetAngles.y;
+            float targetPitch = targetAngles.x;
 
-            // Update Cinemachine target angles
-            Vector3 angles = CinemachineCameraTarget.transform.rotation.eulerAngles;
-            _cinemachineTargetYaw = angles.y;
-            _cinemachineTargetPitch = angles.x;
+            // Smoothly interpolate between current rotation and target rotation
+            _cinemachineTargetYaw = Mathf.LerpAngle(_cinemachineTargetYaw, targetYaw, lockOnSmoothing * Time.deltaTime);
+            _cinemachineTargetPitch = Mathf.LerpAngle(_cinemachineTargetPitch, targetPitch, lockOnSmoothing * Time.deltaTime);
+
+            // Clamp the pitch
+            _cinemachineTargetPitch = ClampAngle(_cinemachineTargetPitch, BottomClamp, TopClamp);
+
+            // Apply the rotation
+            CinemachineCameraTarget.transform.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride,
+                _cinemachineTargetYaw, 0.0f);
         }
 
         public void SetTarget(Transform newTarget)
@@ -121,7 +125,7 @@ namespace SFRemastered
                 lockedTarget = null;
             }
             
-            BlackBoard.playerMovement.SetCameraLockState(isLocked);
+            BlackBoard.lockedTarget = lockedTarget;
         }
 
         private IEnumerator TransitionFOV(float targetFOV)

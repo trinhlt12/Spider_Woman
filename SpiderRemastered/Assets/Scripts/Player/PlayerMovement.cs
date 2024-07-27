@@ -1,7 +1,5 @@
 using EasyCharacterMovement;
 using SFRemastered.InputSystem;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace SFRemastered
@@ -10,10 +8,10 @@ namespace SFRemastered
     {
         public float rootmotionSpeedMult = 0.01f;
         public BlackBoard BlackBoard;
-        private bool isCameraLocked = false;
         private bool _isLockTargetState;
+        [SerializeField] private float lockOnRotationSpeed = 10f;
 
-        protected override void HandleInput(){}
+        protected override void HandleInput() { }
 
         protected override Vector3 CalcDesiredVelocity()
         {
@@ -25,16 +23,38 @@ namespace SFRemastered
             return characterMovement.ConstrainVectorToPlane(desiredVelocity);
         }
 
-        public void SetCameraLockState(bool isLocked)
+        public void SetLockOnTarget(bool isLocked)
         {
-            isCameraLocked = isLocked;
-            SetRotationMode(isLocked ? RotationMode.None : RotationMode.OrientToMovement);
+            _isLockTargetState = isLocked;
+            SetRotationMode(isLocked ? RotationMode.Custom : RotationMode.OrientToMovement);
         }
 
         protected override void CustomRotationMode()
         {
-            base.CustomRotationMode();
-            
+            if (_isLockTargetState && BlackBoard.lockedTarget != null)
+            {
+                Vector3 directionToTarget = (BlackBoard.lockedTarget.position - transform.position).normalized;
+                directionToTarget.y = 0; // Keep the rotation level
+
+                if (directionToTarget != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(directionToTarget);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, lockOnRotationSpeed * Time.deltaTime);
+                }
+            }
+        }
+
+        // Override UpdateRotation to use our custom logic
+        protected override void UpdateRotation()
+        {
+            if (GetRotationMode() == RotationMode.Custom)
+            {
+                CustomRotationMode();
+            }
+            else
+            {
+                base.UpdateRotation();
+            }
         }
     }
 }
