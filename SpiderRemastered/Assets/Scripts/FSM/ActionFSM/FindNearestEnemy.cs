@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Linq;
+using ParadoxNotion.Design;
 
 namespace SFRemastered
 {
+    [Category("Custom")]
     public class NearestEnemyDetector : MonoBehaviour
     {
         [SerializeField] private BlackBoard _blackBoard;

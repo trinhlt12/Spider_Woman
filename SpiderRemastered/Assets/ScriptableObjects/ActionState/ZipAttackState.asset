@@ -18,14 +18,6 @@ MonoBehaviour:
   _wallRunIdleState: {fileID: 11400000, guid: ebd063e0d39590a41bc8b227475dad39, type: 2}
   _webZipState: {fileID: 11400000, guid: 55a78aa90c02d15438baa2ebe2809046, type: 2}
   _wallRunState: {fileID: 11400000, guid: 182e00dfda56e004aa929e18e7f0f616, type: 2}
-  _comboConfig: {fileID: 11400000, guid: 93864eed862deb348ad200e6faaa6ddd, type: 2}
-  _idleState: {fileID: 11400000, guid: e6845c66084543d47a093d08cf7ca170, type: 2}
-  _sprintState: {fileID: 11400000, guid: a1e8d158f33e09f45ac07e0fabc4ffd5, type: 2}
-  webShootDuration: 0.5
-  zipDuration: 1
-  webThickness: 0.1
-  webShootEase: 6
-  zipEase: 7
   zipAttackAnimation:
     _FadeDuration: 0.25
     _Events:
@@ -35,3 +27,8 @@ MonoBehaviour:
     _Clip: {fileID: 7400000, guid: 68e385d5e0efa16419f6f07462c47cb3, type: 3}
     _Speed: 1
     _NormalizedStartTime: NaN
+  webShootDuration: 0.5
+  zipDuration: 1
+  webThickness: 0.1
+  zipEase: 7
+  comboAttackState: {fileID: 11400000, guid: 37e92e94e2263c1429226186a4e98261, type: 2}
