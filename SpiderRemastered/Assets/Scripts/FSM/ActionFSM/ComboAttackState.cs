@@ -37,14 +37,13 @@ namespace SFRemastered
         public override void EnterState()
         {
             base.EnterState();
-            _blackBoard.inAttackMode = true;
             _comboSystem.StartCombo();
             _isAnimationEnding = false;
-            _blackBoard.playerMovement.useRootMotion = true;
-            _blackBoard.rigidbody.isKinematic = false;
-            _blackBoard.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
-            _blackBoard.rigidbody.velocity = Vector3.zero;
-            //LockOntoClosestEnemy();
+            _blackBoard.PlayerVars.playerMovement.useRootMotion = true;
+            _blackBoard.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+            _blackBoard.GetComponent<Rigidbody>().isKinematic = false;
+            _blackBoard.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            RotateTowardsTarget();
             ExecuteNextAttack();
         }
 
@@ -84,7 +83,7 @@ namespace SFRemastered
                 if (attack.AnimationClip != null && attack.AnimationClip.Count > 0)
                 {
                     int randomIndex = Random.Range(0, attack.AnimationClip.Count);
-                    _state = _blackBoard.animancer.Play(attack.AnimationClip[randomIndex]);
+                    _state = _blackBoard.CommonVars.animancer.Play(attack.AnimationClip[randomIndex]);
                 }
                 else
                 {
@@ -100,17 +99,52 @@ namespace SFRemastered
                 ApplyDamage(damage, attack);
             }
         }
+        
+        
+        private void RotateTowardsTarget()
+        {
+            Transform target = NearestEnemyDetector.GetCurrentTarget();
+            if (target != null)
+            {
+                Vector3 targetPosition = target.position;
+                Vector3 playerPosition = _blackBoard.transform.position;
+        
+                // Calculate direction on the horizontal plane only
+                Vector3 direction = targetPosition - playerPosition;
+                direction.y = 0;
+
+                if (direction != Vector3.zero)
+                {
+                    // Calculate the target rotation on the Y-axis only
+                    float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+                    Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
+
+                    // Use DOTween to smoothly rotate to the target rotation
+                    _blackBoard.transform.DORotate(targetRotation.eulerAngles, 0.2f)
+                        .SetEase(Ease.OutSine)
+                        .OnComplete(() =>
+                        {
+                            _blackBoard.transform.rotation = targetRotation;
+
+                            if (_blackBoard.GetComponent<Rigidbody>() != null)
+                            {
+                                _blackBoard.GetComponent<Rigidbody>().rotation = targetRotation;
+                            }
+                        });
+                }
+            }
+        }
 
         protected void ApplyDamage(float damage, AttackData attack)
         {
-            _blackBoard.attackRange = attack.HitboxSize.magnitude / 2f;
+            _blackBoard.PlayerVars.attackRange = attack.HitboxSize.magnitude / 2f;
             Vector3 attackOrigin =
-                _blackBoard.transform.position + _blackBoard.transform.forward * _blackBoard.attackRange / 2f;
+                _blackBoard.transform.position + _blackBoard.transform.forward * _blackBoard.PlayerVars.attackRange / 2f;
             Vector3 attackDirection = _blackBoard.transform.forward;
 
             Collider[] hitColliders = Physics.OverlapBox(
                 attackOrigin,
-                attack.HitboxSize / 2f,
+                new Vector3(attack.HitboxSize.x, attack.HitboxSize.y, attack.HitboxSize.z * 2),
                 _blackBoard.transform.rotation,
                 LayerMask.GetMask("Enemy")
             );
@@ -145,7 +179,7 @@ namespace SFRemastered
                 _state.Events.OnEnd -= OnAttackAnimationEnd;
             }
             
-            _blackBoard.playerMovement.useRootMotion = false;
+            _blackBoard.PlayerVars.playerMovement.useRootMotion = false;
 
             if (!_comboSystem.CanContinueCombo())
             {
@@ -157,7 +191,7 @@ namespace SFRemastered
         {
             _comboSystem.EndCombo();
             _fsm.ChangeState(_idleState);
-            _blackBoard.playerMovement.SetVelocity(Vector3.zero);
+            _blackBoard.PlayerVars.playerMovement.SetVelocity(Vector3.zero);
         }
 
         public override void ExitState()
@@ -169,10 +203,10 @@ namespace SFRemastered
             }
             _comboSystem.EndCombo();
             _isAnimationEnding = false;
-            _blackBoard.rigidbody.velocity = Vector3.zero;
-            _blackBoard.rigidbody.isKinematic = true;
-            _blackBoard.rigidbody.constraints = RigidbodyConstraints.None;
-            _blackBoard.playerMovement.useRootMotion = false;
+            _blackBoard.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            _blackBoard.GetComponent<Rigidbody>().isKinematic = true;
+            _blackBoard.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            _blackBoard.PlayerVars.playerMovement.useRootMotion = false;
         }
 
         private void MoveTowardsTarget()
@@ -181,11 +215,11 @@ namespace SFRemastered
             
             float distance = Vector3.Distance(_blackBoard.transform.position, _lockedTarget.position);
             
-            _blackBoard.mediumRange = _blackBoard.attackRange * 2f;
-            _blackBoard.farRange = _blackBoard.attackRange * 3f;
+            _blackBoard.PlayerVars.mediumRange = _blackBoard.PlayerVars.attackRange * 2f;
+            _blackBoard.PlayerVars.farRange = _blackBoard.PlayerVars.attackRange * 3f;
             
             Vector3 direction = (_lockedTarget.position - _blackBoard.transform.position).normalized;
-            float maxSpeed = _blackBoard.playerMovement.GetMaxSpeed();
+            float maxSpeed = _blackBoard.PlayerVars.playerMovement.GetMaxSpeed();
         }
     }
 }

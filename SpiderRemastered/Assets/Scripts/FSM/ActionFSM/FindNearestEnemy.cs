@@ -14,14 +14,14 @@ namespace SFRemastered
         [SerializeField] private GameObject targetIconPrefab;
         [SerializeField] private float iconOffset = 2f;
 
-        private Transform currentTarget;
+        private static Transform currentTarget;
         private float lastUpdateTime;
         private GameObject currentTargetIcon;
         private CameraController cameraController;
 
         private void Start()
         {
-            cameraController = _blackBoard.camera.GetComponent<CameraController>();
+            cameraController = _blackBoard.GetComponent<Camera>().GetComponent<CameraController>();
             if (cameraController == null)
             {
                 Debug.LogError("CameraController not found on BlackBoard!");
@@ -101,7 +101,7 @@ namespace SFRemastered
             return currentTarget.position + Vector3.up * iconOffset;
         }
 
-        public Transform GetCurrentTarget() => currentTarget;
+        public static Transform GetCurrentTarget() => currentTarget;
 
         private void OnDrawGizmosSelected()
         {
